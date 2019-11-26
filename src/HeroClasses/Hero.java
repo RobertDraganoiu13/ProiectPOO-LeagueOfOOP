@@ -1,8 +1,10 @@
-package Hero;
+package HeroClasses;
 
 import Map.TerrainType;
 
 public class Hero {
+    protected int x;
+    protected int y;
     protected int hp;
     protected int bonusHpPerLevel;
     protected int xp;
@@ -10,7 +12,9 @@ public class Hero {
     protected TerrainType preferredTerrain;
     protected float bonusPercentageOnPreferredTerrain;
 
-    public Hero(int hp, int bonusHpPerLevel, TerrainType preferredTerrain, float bonusPercentageOnPreferredTerrain) {
+    public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain, float bonusPercentageOnPreferredTerrain) {
+        this.x = x;
+        this.y = y;
         this.hp = hp;
         this.bonusHpPerLevel = bonusHpPerLevel;
         this.xp = 0;
