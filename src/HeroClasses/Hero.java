@@ -3,6 +3,7 @@ package HeroClasses;
 import Map.TerrainType;
 
 public class Hero {
+    protected HeroStatus status;
     protected int x;
     protected int y;
     protected int hp;
@@ -13,6 +14,7 @@ public class Hero {
     protected float bonusPercentageOnPreferredTerrain;
 
     public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain, float bonusPercentageOnPreferredTerrain) {
+        this.status = HeroStatus.Alive;
         this.x = x;
         this.y = y;
         this.hp = hp;
@@ -45,5 +47,20 @@ public class Hero {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        res += ("Class: " + this.getClass().getName() + "\n");
+        res += ("Status: " + status + "\n");
+        res += ("Coords " + x + " " + y) + "\n";
+        res += ("Hp: " + hp + "\n");
+        res += ("BonuHpPerLevel: " + bonusHpPerLevel + "\n");
+        res += ("Level: " + level + "\n");
+        res += ("Xp: " + xp + "\n");
+        res += ("Preffered terrain: " + preferredTerrain + "\n");
+        res += ("Bonus percentage: " + bonusPercentageOnPreferredTerrain + "\n");
+        return res;
     }
 }

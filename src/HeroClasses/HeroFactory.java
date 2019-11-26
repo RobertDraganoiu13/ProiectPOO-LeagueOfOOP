@@ -30,6 +30,7 @@ public class HeroFactory {
 
     public ArrayList<Hero> createAllHeroes(ArrayList<HeroInputData> heroesData) {
         ArrayList<Hero> heroes = new ArrayList<Hero>();
+        // create players using heroesData
         for(var data : heroesData) {
             heroes.add(createHero(data));
         }

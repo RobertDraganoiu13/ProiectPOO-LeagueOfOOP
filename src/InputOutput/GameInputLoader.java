@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class GameInputLoader {
     private FileSystem fileSystem;
 
-    public GameInputLoader(String inputPath) {
+    public GameInputLoader(String inputPath, String outputPath) {
         try {
-            fileSystem = new FileSystem(inputPath, inputPath);
+            fileSystem = new FileSystem(inputPath, outputPath);
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,7 +28,7 @@ public class GameInputLoader {
                 charMap[i][j] = line.charAt(j);
             }
         }
-
+         // add heroes data to input data array
         int numOfHeroes = fileSystem.nextInt();
         ArrayList<HeroInputData> heroesData = new ArrayList<HeroInputData>();
         for(int i = 0; i < numOfHeroes; ++i) {
@@ -37,6 +37,13 @@ public class GameInputLoader {
             int y = fileSystem.nextInt();
             heroesData.add(new HeroInputData(type, x, y));
         }
-        return new GameInput(height, width, charMap, heroesData);
+
+        // add movements to movements array
+        int rounds = fileSystem.nextInt();
+        ArrayList<String> movements = new ArrayList<String>();
+        for(int i = 0; i < rounds; ++i) {
+            movements.add(fileSystem.nextWord());
+        }
+        return new GameInput(height, width, charMap, heroesData, rounds, movements);
     }
 }

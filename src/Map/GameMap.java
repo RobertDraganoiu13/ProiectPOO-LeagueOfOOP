@@ -36,4 +36,18 @@ public class GameMap {
     public TerrainType getCellAt(int x, int y) {
         return cells[x][y];
     }
+
+    @Override
+    public String toString() {
+        String res = "";
+        res += ("Class " + this.getClass().getName() + "\n");
+        res += ("Width/Height: " + width + " " + height + "\n");
+        for(int i = 0; i < height; ++i) {
+            for(int j = 0; j < width; ++j) {
+                res += (cells[i][j] + " ");
+            }
+            res += "\n";
+        }
+        return res;
+    }
 }
