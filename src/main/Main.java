@@ -3,6 +3,7 @@ package main;
 
 import InputOutput.GameInput;
 import InputOutput.GameInputLoader;
+import Map.TerrainType;
 
 import java.io.IOException;
 
@@ -11,8 +12,16 @@ public class Main {
         GameInputLoader loader = new GameInputLoader(args[0], args[1]);
         GameInput input = loader.load();
 
-        System.out.println(input.getHeroes());
-        System.out.println(input.getGameMap());
-        System.out.println(input.getMovements());
+        var heroes = input.getHeroes();
+        System.out.println(heroes);
+        heroes.get(1).setLevel(25);
+        heroes.get(0).takeDamage(550);
+        heroes.get(0).hitByFirstAbility(heroes.get(1), TerrainType.Land);
+        System.out.println(heroes);
+
+
+
+        //System.out.println(input.getGameMap());
+        //System.out.println(input.getMovements());
     }
 }
