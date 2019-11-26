@@ -21,4 +21,6 @@ public class KnightConstants {
     public static final float KNIGHT_ABILITY2_PYROMANCER_MODIFIER = 0.9f;
     public static final float KNIGHT_ABILITY2_ROGUE_MODIFIER = 0.8f;
     public static final float KNIGHT_ABILITY2_WIZARD_MODIFIER = 1.05f;
+    public static final int   KNIGHT_ABILITY2_ROUNDS_INCAPACITATED = 1;
+
 }

@@ -5,7 +5,7 @@ import common.RogueConstants;
 
 public class Rogue extends Hero {
     public Rogue(int x, int y) {
-        super(x, y, RogueConstants.ROGUE_BASE_HP, RogueConstants.ROGUE_BONUS_HP_PER_LEVEL, TerrainType.Woods, RogueConstants.ROGUE_BONUS_TERRAIN_PERCENTAGE);
+        super(x, y, RogueConstants.ROGUE_BASE_HP, RogueConstants.ROGUE_BONUS_HP_PER_LEVEL, TerrainType.Woods);
     }
 
     @Override
@@ -19,7 +19,17 @@ public class Rogue extends Hero {
     }
 
     @Override
+    public void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+
+    }
+
+    @Override
     public void useFirstAbility(Knight enemyHero, TerrainType terrain) {
+
+    }
+
+    @Override
+    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
 
     }
 
@@ -39,7 +49,7 @@ public class Rogue extends Hero {
     }
 
     @Override
-    public void useSecondAbility(Knight enemyHero, TerrainType terrainType) {
+    public void useSecondAbility(Knight enemyHero, TerrainType terrain) {
 
     }
 

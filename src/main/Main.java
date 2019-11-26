@@ -14,9 +14,10 @@ public class Main {
 
         var heroes = input.getHeroes();
         System.out.println(heroes);
-        heroes.get(1).setLevel(25);
-        heroes.get(0).takeDamage(550);
-        heroes.get(0).hitByFirstAbility(heroes.get(1), TerrainType.Land);
+        heroes.get(1).setLevel(10);
+        for(int i = 1; i < 4; ++i) {
+            heroes.get(i).hitByFirstAbility(heroes.get(0), TerrainType.Volcanic);
+        }
         System.out.println(heroes);
 
 

@@ -11,12 +11,11 @@ public abstract class Hero {
     protected int xp;
     protected int level;
     protected TerrainType preferredTerrain;
-    protected float bonusPercentageOnPreferredTerrain;
     protected int roundsLeftOfDamageOverTime;
     protected int roundsLeftOfOverTimeEffect;
     protected OverTimeEffects overTimeEffect;
 
-    public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain, float bonusPercentageOnPreferredTerrain) {
+    public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain) {
         this.isAlive = true;
         this.x = x;
         this.y = y;
@@ -25,7 +24,6 @@ public abstract class Hero {
         this.xp = 0;
         this.level = 0;
         this.preferredTerrain = preferredTerrain;
-        this.bonusPercentageOnPreferredTerrain = bonusPercentageOnPreferredTerrain;
         this.roundsLeftOfDamageOverTime = 0;
         this.overTimeEffect = OverTimeEffects.None;
     }
@@ -57,16 +55,32 @@ public abstract class Hero {
         this.level = level;
     }
 
-    // double dispatch methods
+    public OverTimeEffects getOverTimeEffect() {
+        return this.overTimeEffect;
+    }
+
+    public void addOverTimeEffect(OverTimeEffects effect, int duration) {
+        this.overTimeEffect = effect;
+        this.roundsLeftOfOverTimeEffect = duration;
+    }
+
+
+    // double dispatch "accept" methods
     public abstract void hitByFirstAbility(Hero enemyHero, TerrainType terrain);
     public abstract void hitBySecondAbility(Hero enemyHero, TerrainType terrain);
 
+    // generic Hero methods used by double dispatch methods
+    public abstract void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier);
+    public abstract void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier);
+
+    // double dispatch "interact with" methods
     public abstract void useFirstAbility(Knight enemyHero, TerrainType terrain);
     public abstract void useFirstAbility(Pyromancer enemyHero, TerrainType terrain);
     public abstract void useFirstAbility(Rogue enemyHero, TerrainType terrain);
     public abstract void useFirstAbility(Wizard enemyHero, TerrainType terrain);
 
-    public abstract void useSecondAbility(Knight enemyHero, TerrainType terrainType);
+
+    public abstract void useSecondAbility(Knight enemyHero, TerrainType terrain);
     public abstract void useSecondAbility(Pyromancer enemyHero, TerrainType terrain);
     public abstract void useSecondAbility(Rogue enemyHero, TerrainType terrain);
     public abstract void useSecondAbility(Wizard enemyHero, TerrainType terrain);
@@ -82,7 +96,7 @@ public abstract class Hero {
         res += ("Level: " + level + "\n");
         res += ("Xp: " + xp + "\n");
         res += ("Preffered terrain: " + preferredTerrain + "\n");
-        res += ("Bonus percentage: " + bonusPercentageOnPreferredTerrain + "\n\n");
+        res += ("Current over time effect: " + overTimeEffect + " for " + roundsLeftOfOverTimeEffect + " rounds\n\n");
         return res;
     }
 }

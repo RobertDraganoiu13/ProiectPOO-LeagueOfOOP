@@ -1,5 +1,5 @@
 package HeroClasses;
 
 public enum OverTimeEffects {
-    None
+    None, Incapacitated, Ignited
 }

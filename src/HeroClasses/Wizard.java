@@ -5,7 +5,7 @@ import common.WizardConstants;
 
 public class Wizard extends Hero {
     public Wizard(int x, int y) {
-        super(x, y, WizardConstants.WIZARD_BASE_HP, WizardConstants.WIZARD_BONUS_HP_PER_LEVEL, TerrainType.Desert, WizardConstants.WIZARD_BONUS_TERRAIN_PERCENTAGE);
+        super(x, y, WizardConstants.WIZARD_BASE_HP, WizardConstants.WIZARD_BONUS_HP_PER_LEVEL, TerrainType.Desert);
     }
 
     @Override
@@ -14,8 +14,18 @@ public class Wizard extends Hero {
     }
 
     @Override
+    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+
+    }
+
+    @Override
     public void hitBySecondAbility(Hero enemyHero, TerrainType terrain) {
         enemyHero.useSecondAbility(this, terrain);
+    }
+
+    @Override
+    public void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+
     }
 
     @Override
@@ -39,7 +49,7 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public void useSecondAbility(Knight enemyHero, TerrainType terrainType) {
+    public void useSecondAbility(Knight enemyHero, TerrainType terrain) {
 
     }
 
