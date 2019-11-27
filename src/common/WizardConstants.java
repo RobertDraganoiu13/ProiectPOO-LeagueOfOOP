@@ -18,4 +18,5 @@ public class WizardConstants {
     public static final float WIZARD_ABILITY2_KNIGHT_MODIFIER = 1.4f;
     public static final float WIZARD_ABILITY2_PYROMANCER_MODIFIER = 1.3f;
     public static final float WIZARD_ABILITY2_ROGUE_MODIFIER = 1.2f;
+    public static final float WIZARD_ABILITY2_WIZARD_MODIFIER = 0.0f;
 }

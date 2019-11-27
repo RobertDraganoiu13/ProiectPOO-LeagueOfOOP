@@ -11,6 +11,8 @@ public class RogueConstants {
     public static final float ROGUE_ABILITY1_PYROMANCER_MODIFIER = 1.25f;
     public static final float ROGUE_ABILITY1_ROGUE_MODIFIER = 1.2f;
     public static final float ROGUE_ABILITY1_WIZARD_MODIFIER = 1.25f;
+    public static final float ROGUE_ABILITY1_CRIT_MODIFIER = 1.5f;
+    public static final int   ROGUE_ABILITY1_BACKSTAB_ROUNDS = 3;
 
     public static final int   ROGUE_ABILITY2_BASE_DAMAGE = 40;
     public static final int   ROGUE_ABILITY2_LEVEL_BONUS_MODIFIER = 10;

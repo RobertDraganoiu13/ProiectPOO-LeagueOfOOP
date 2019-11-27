@@ -49,8 +49,11 @@ public class Pyromancer extends Hero {
         int totalDamage = Math.round(abilityDamage * (terrainDamageModifier * raceModifier));
         enemyHero.takeDamage(totalDamage);
 
+        // calculate per round damage
+        int perRoundDamage = PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_LEVEL_BONUS_MODIFIER;
+
         // add ignition effect
-        enemyHero.addOverTimeEffect(OverTimeEffects.Ignited, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED);
+        enemyHero.addOverTimeEffect(OverTimeEffects.Ignited, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, perRoundDamage);
     }
 
 

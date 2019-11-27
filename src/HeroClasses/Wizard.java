@@ -14,11 +14,6 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
-
-    }
-
-    @Override
     public void hitBySecondAbility(Hero enemyHero, TerrainType terrain) {
         enemyHero.useSecondAbility(this, terrain);
     }
@@ -29,42 +24,79 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public void useFirstAbility(Knight enemyHero, TerrainType terrain) {
+    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
 
+    }
+
+    @Override
+    public void useFirstAbility(Knight enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY1_KNIGHT_MODIFIER;
+
+        // use ability
+        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useFirstAbility(Pyromancer enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY1_PYROMANCER_MODIFIER;
 
+        // use ability
+        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useFirstAbility(Rogue enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY1_ROGUE_MODIFIER;
 
+        // use ability
+        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useFirstAbility(Wizard enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY1_WIZARD_MODIFIER;
 
+        // use ability
+        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useSecondAbility(Knight enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY2_KNIGHT_MODIFIER;
 
+        // use ability
+        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useSecondAbility(Pyromancer enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY2_PYROMANCER_MODIFIER;
 
+        // use ability
+        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useSecondAbility(Rogue enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY2_ROGUE_MODIFIER;
 
+        // use ability
+        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 
     @Override
     public void useSecondAbility(Wizard enemyHero, TerrainType terrain) {
+        // get race modifier
+        float raceModifier = WizardConstants.WIZARD_ABILITY2_WIZARD_MODIFIER;
 
+        // use ability
+        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
     }
 }

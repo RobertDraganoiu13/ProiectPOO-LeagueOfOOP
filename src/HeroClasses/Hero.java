@@ -14,6 +14,7 @@ public abstract class Hero {
     protected int roundsLeftOfDamageOverTime;
     protected int roundsLeftOfOverTimeEffect;
     protected OverTimeEffects overTimeEffect;
+    protected int overTimeDamage;
 
     public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain) {
         this.isAlive = true;
@@ -26,6 +27,7 @@ public abstract class Hero {
         this.preferredTerrain = preferredTerrain;
         this.roundsLeftOfDamageOverTime = 0;
         this.overTimeEffect = OverTimeEffects.None;
+        this.overTimeDamage = 0;
     }
 
     public int getHp() {
@@ -59,9 +61,10 @@ public abstract class Hero {
         return this.overTimeEffect;
     }
 
-    public void addOverTimeEffect(OverTimeEffects effect, int duration) {
+    public void addOverTimeEffect(OverTimeEffects effect, int duration, int damage) {
         this.overTimeEffect = effect;
         this.roundsLeftOfOverTimeEffect = duration;
+        this.overTimeDamage = damage;
     }
 
 
@@ -96,7 +99,8 @@ public abstract class Hero {
         res += ("Level: " + level + "\n");
         res += ("Xp: " + xp + "\n");
         res += ("Preffered terrain: " + preferredTerrain + "\n");
-        res += ("Current over time effect: " + overTimeEffect + " for " + roundsLeftOfOverTimeEffect + " rounds\n\n");
+        res += ("Current over time effect: " + overTimeEffect + " for " + roundsLeftOfOverTimeEffect + " rounds\n");
+        res += ("Current over time DAMAGE: " + overTimeEffect + " for " + overTimeDamage + " rounds\n\n");
         return res;
     }
 }

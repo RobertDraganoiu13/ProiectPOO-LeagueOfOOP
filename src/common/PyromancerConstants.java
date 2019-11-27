@@ -14,6 +14,8 @@ public class PyromancerConstants {
 
     public static final int   PYROMANCER_ABILITY2_BASE_DAMAGE = 150;
     public static final int   PYROMANCER_ABILITY2_LEVEL_BONUS_MODIFIER = 20;
+    public static final int   PYROMANCER_ABILITY2_OVER_TIME_DAMAGE = 150;
+    public static final int   PYROMANCER_ABILITY2_OVER_TIME_LEVEL_BONUS_MODIFIER = 20;
     public static final float PYROMANCER_ABILITY2_KNIGHT_MODIFIER = 1.2f;
     public static final float PYROMANCER_ABILITY2_PYROMANCER_MODIFIER = 0.9f;
     public static final float PYROMANCER_ABILITY2_ROGUE_MODIFIER = 0.8f;
