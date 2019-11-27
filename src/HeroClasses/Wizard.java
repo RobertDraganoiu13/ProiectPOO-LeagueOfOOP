@@ -10,12 +10,12 @@ public class Wizard extends Hero {
 
     @Override
     public float provideFirstAbilityRaceModifier(Hero enemyHero) {
-        enemyHero.getFirstAbilityRaceModifier(this);
+        return enemyHero.getFirstAbilityRaceModifier(this);
     }
 
     @Override
     public float provideSecondAbilityRaceModifier(Hero enemyHero) {
-        enemyHero.getSecondAbilityRaceModifier(this);
+        return enemyHero.getSecondAbilityRaceModifier(this);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Wizard extends Hero {
 
         // base damage percentage + level adds
         float baseDamagePercentage = Math.min(WizardConstants.WIZARD_ABILITY2_MAX_PERCENTAGE,
-                                                WizardConstants.WIZARD_ABILITY2_BASE_PERCENTAGE + this.getLevel() * WizardConstants.WIZARD_ABILITY2_LEVEL_BONUS_PERCENTAGE)
+                                                WizardConstants.WIZARD_ABILITY2_BASE_PERCENTAGE + this.getLevel() * WizardConstants.WIZARD_ABILITY2_LEVEL_BONUS_PERCENTAGE);
 
         // compute terrain modifier
         float terrainDamageModifier = 1.0f;

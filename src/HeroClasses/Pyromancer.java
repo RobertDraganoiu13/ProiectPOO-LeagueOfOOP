@@ -40,7 +40,7 @@ public class Pyromancer extends Hero {
         int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this));
 
         // apply over time effect and deal damage
-        enemyHero.addOverTimeEffect(OverTimeEffects.Ignited, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);
+        enemyHero.addOverTimeEffect(OverTimeEffects.Damaged, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);
         enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
     }
 

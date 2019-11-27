@@ -37,6 +37,117 @@ public abstract class Hero {
         this.lastDamageTakenCounter = 0;
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public boolean hasSameCoordsAs(Hero enemyHero) {
+        if(this.x == enemyHero.getX() && this.y == enemyHero.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    // TODO: make apply effects function outside move, use it also whe players stay
+    public void moveUp() {
+        // move only if not incapacitated
+        if(overTimeEffect != OverTimeEffects.Incapacitated) {
+            x--;
+        }
+
+        // take damage if it exists
+        if(overTimeDamage > 0) {
+            takeDamage(overTimeDamage, 0);
+        }
+
+        // decrement rounds left if necessary
+        if(overTimeEffect != OverTimeEffects.None) {
+            roundsLeftOfOverTimeEffect--;
+        }
+
+        // remove over time effect if rounds passed
+        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
+            overTimeEffect = OverTimeEffects.None;
+            overTimeDamage = 0;
+        }
+    }
+    public void moveDown() {
+        // move only if not incapacitated
+        if(overTimeEffect != OverTimeEffects.Incapacitated) {
+            x++;
+        }
+
+        // take damage if it exists
+        if(overTimeDamage > 0) {
+            takeDamage(overTimeDamage, 0);
+        }
+
+        // decrement rounds left if necessary
+        if(overTimeEffect != OverTimeEffects.None) {
+            roundsLeftOfOverTimeEffect--;
+        }
+
+        // remove over time effect if rounds passed
+        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
+            overTimeEffect = OverTimeEffects.None;
+            overTimeDamage = 0;
+        }
+    }
+
+    public void moveLeft() {
+        // move only if not incapacitated
+        if(overTimeEffect != OverTimeEffects.Incapacitated) {
+            y--;
+        }
+
+        // take damage if it exists
+        if(overTimeDamage > 0) {
+            takeDamage(overTimeDamage, 0);
+        }
+
+        // decrement rounds left if necessary
+        if(overTimeEffect != OverTimeEffects.None) {
+            roundsLeftOfOverTimeEffect--;
+        }
+
+        // remove over time effect if rounds passed
+        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
+            overTimeEffect = OverTimeEffects.None;
+            overTimeDamage = 0;
+        }
+    }
+
+    public void moveRight() {
+        // move only if not incapacitated
+        if(overTimeEffect != OverTimeEffects.Incapacitated) {
+            y++;
+        }
+
+        // take damage if it exists
+        if(overTimeDamage > 0) {
+            takeDamage(overTimeDamage, 0);
+        }
+
+        // decrement rounds left if necessary
+        if(overTimeEffect != OverTimeEffects.None) {
+            roundsLeftOfOverTimeEffect--;
+        }
+
+        // remove over time effect if rounds passed
+        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
+            overTimeEffect = OverTimeEffects.None;
+            overTimeDamage = 0;
+        }
+    }
+
     public int getHp() {
         return hp;
     }
@@ -64,19 +175,22 @@ public abstract class Hero {
     }
 
     public int getXp() {
-        return xp;
+        return this.xp;
     }
 
-    public void setXp(int xp) {
-        this.xp = xp;
+    public void addXp(int enemyLevel) {
+        // compute temp xp based on enemyLevel
+        int tempExp = Math.max(0, Constants.XP_CONSTANT1 - (this.level - enemyLevel) * Constants.XP_CONSTANT2);
+        this.xp += tempExp;
+
+        // update level based on total xp
+        if(this.xp >= Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2) {
+            this.level++;
+        }
     }
 
     public int getLevel() {
         return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public OverTimeEffects getOverTimeEffect() {
@@ -128,7 +242,8 @@ public abstract class Hero {
         res += ("Xp: " + xp + "\n");
         res += ("Preffered terrain: " + preferredTerrain + "\n");
         res += ("Current over time effect: " + overTimeEffect + " for " + roundsLeftOfOverTimeEffect + " rounds\n");
-        res += ("Current over time DAMAGE: " + overTimeEffect + " for " + overTimeDamage + " rounds\n\n");
+        res += ("Current over time damage: " + overTimeDamage + " \n");
+        res += ("Damage taken(without race modifier): " + lastDamageTaken + "\n\n");
         return res;
     }
 }
