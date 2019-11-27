@@ -3,7 +3,7 @@ package common;
 public class KnightConstants {
     public static final int KNIGHT_BASE_HP = 900;
     public static final int KNIGHT_BONUS_HP_PER_LEVEL = 80;
-    public static final float KNIGHT_BONUS_TERRAIN_PERCENTAGE = 1.15f;
+    public static final float KNIGHT_BONUS_TERRAIN_PERCENTAGE_MODIFIER = 1.15f;
 
     public static final int   KNIGHT_ABILITY1_BASE_DAMAGE = 200;
     public static final int   KNIGHT_ABILITY1_LEVEL_BONUS_MODIFIER = 30;

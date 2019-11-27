@@ -1,11 +1,13 @@
 package HeroClasses;
 
 import Map.TerrainType;
+import common.Constants;
 
 public abstract class Hero {
     protected boolean isAlive;
     protected int x;
     protected int y;
+    protected int maxHp;
     protected int hp;
     protected int bonusHpPerLevel;
     protected int xp;
@@ -15,11 +17,14 @@ public abstract class Hero {
     protected int roundsLeftOfOverTimeEffect;
     protected OverTimeEffects overTimeEffect;
     protected int overTimeDamage;
+    protected int lastDamageTaken;
+    protected int lastDamageTakenCounter;
 
     public Hero(int x, int y, int hp, int bonusHpPerLevel, TerrainType preferredTerrain) {
         this.isAlive = true;
         this.x = x;
         this.y = y;
+        this.maxHp = hp;
         this.hp = hp;
         this.bonusHpPerLevel = bonusHpPerLevel;
         this.xp = 0;
@@ -28,15 +33,32 @@ public abstract class Hero {
         this.roundsLeftOfDamageOverTime = 0;
         this.overTimeEffect = OverTimeEffects.None;
         this.overTimeDamage = 0;
+        this.lastDamageTaken = 0;
+        this.lastDamageTakenCounter = 0;
     }
 
     public int getHp() {
         return hp;
     }
 
-    public void takeDamage(int dmg) {
-        this.hp = Math.max(this.hp - dmg, 0);
-        if(this.hp == 0) {
+    public int getMaxHp() { return maxHp; }
+
+    public void takeDamage(int dmg, float raceModifier) {
+        if(lastDamageTakenCounter == Constants.ABILITIES_PER_ROUND) {
+            lastDamageTaken = 0;
+            lastDamageTakenCounter = 0;
+        }
+
+        // add dmg taken without race modifier
+        lastDamageTaken += dmg;
+        lastDamageTakenCounter++;
+
+        // compute dmg with race modifier and subtract it from hp
+        dmg = Math.round(dmg * raceModifier);
+        this.hp -= dmg;
+
+        // update status if hp goes to 0 or below
+        if(this.hp <= 0) {
             isAlive = false;
         }
     }
@@ -61,6 +83,10 @@ public abstract class Hero {
         return this.overTimeEffect;
     }
 
+    public int getLastDamageTaken() {
+        return lastDamageTaken;
+    }
+
     public void addOverTimeEffect(OverTimeEffects effect, int duration, int damage) {
         this.overTimeEffect = effect;
         this.roundsLeftOfOverTimeEffect = duration;
@@ -68,25 +94,27 @@ public abstract class Hero {
     }
 
 
-    // double dispatch "accept" methods
-    public abstract void hitByFirstAbility(Hero enemyHero, TerrainType terrain);
-    public abstract void hitBySecondAbility(Hero enemyHero, TerrainType terrain);
+    // return damage dealt without race modifiers, also applying over time effects
+    public abstract void useFirstAbility(Hero enemyHero, TerrainType terrain);
+    public abstract void useSecondAbility(Hero enemyHero, TerrainType terrain);
 
-    // generic Hero methods used by double dispatch methods
-    public abstract void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier);
-    public abstract void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier);
+    // double dispatch "accept" methods
+    public abstract float provideFirstAbilityRaceModifier(Hero enemyHero);
+    public abstract float provideSecondAbilityRaceModifier(Hero enemyHero);
+
+
 
     // double dispatch "interact with" methods
-    public abstract void useFirstAbility(Knight enemyHero, TerrainType terrain);
-    public abstract void useFirstAbility(Pyromancer enemyHero, TerrainType terrain);
-    public abstract void useFirstAbility(Rogue enemyHero, TerrainType terrain);
-    public abstract void useFirstAbility(Wizard enemyHero, TerrainType terrain);
+    public abstract float getFirstAbilityRaceModifier(Knight enemyHero);
+    public abstract float getFirstAbilityRaceModifier(Pyromancer enemyHero);
+    public abstract float getFirstAbilityRaceModifier(Rogue enemyHero);
+    public abstract float getFirstAbilityRaceModifier(Wizard enemyHero);
 
 
-    public abstract void useSecondAbility(Knight enemyHero, TerrainType terrain);
-    public abstract void useSecondAbility(Pyromancer enemyHero, TerrainType terrain);
-    public abstract void useSecondAbility(Rogue enemyHero, TerrainType terrain);
-    public abstract void useSecondAbility(Wizard enemyHero, TerrainType terrain);
+    public abstract float getSecondAbilityRaceModifier(Knight enemyHero);
+    public abstract float getSecondAbilityRaceModifier(Pyromancer enemyHero);
+    public abstract float getSecondAbilityRaceModifier(Rogue enemyHero);
+    public abstract float getSecondAbilityRaceModifier(Wizard enemyHero);
 
     @Override
     public String toString() {

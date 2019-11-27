@@ -9,123 +9,88 @@ public class Pyromancer extends Hero {
     }
 
     @Override
-    public void hitByFirstAbility(Hero enemyHero, TerrainType terrain) {
-        enemyHero.useFirstAbility(this, terrain);
-    }
-
-    @Override
-    public void hitBySecondAbility(Hero enemyHero, TerrainType terrain) {
-        enemyHero.useSecondAbility(this, terrain);
-    }
-
-    @Override
-    public void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+    public void useFirstAbility(Hero enemyHero, TerrainType terrain) {
         // base damage + level adds
         int abilityDamage = PyromancerConstants.PYROMANCER_ABILITY1_BASE_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY1_LEVEL_BONUS_MODIFIER;
 
-        // compute modifiers
+        // compute terrain modifier
         float terrainDamageModifier = 1.0f;
         if(terrain == this.preferredTerrain) {
-            terrainDamageModifier = PyromancerConstants.PYROMANCER_BONUS_TERRAIN_PERCENTAGE;
+            terrainDamageModifier = PyromancerConstants.PYROMANCER_BONUS_TERRAIN_PERCENTAGE_MODIFIER;
         }
 
-        // calculate and deal total damage
-        int totalDamage = Math.round(abilityDamage * (terrainDamageModifier * raceModifier));
-        enemyHero.takeDamage(totalDamage);
+        // calculate and deal damage
+        int damage = Math.round(abilityDamage * terrainDamageModifier);
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this));
     }
 
     @Override
-    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+    public void useSecondAbility(Hero enemyHero, TerrainType terrain) {
         // base damage + level adds
         int abilityDamage = PyromancerConstants.PYROMANCER_ABILITY2_BASE_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY2_LEVEL_BONUS_MODIFIER;
 
-        // compute modifiers
+        // compute terrain modifier
         float terrainDamageModifier = 1.0f;
         if(terrain == this.preferredTerrain) {
-            terrainDamageModifier = PyromancerConstants.PYROMANCER_BONUS_TERRAIN_PERCENTAGE;
+            terrainDamageModifier = PyromancerConstants.PYROMANCER_BONUS_TERRAIN_PERCENTAGE_MODIFIER;
         }
 
-        // calculate and deal total damage
-        int totalDamage = Math.round(abilityDamage * (terrainDamageModifier * raceModifier));
-        enemyHero.takeDamage(totalDamage);
+        // apply modifier
+        int damage = Math.round(abilityDamage * terrainDamageModifier);
+        int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this));
 
-        // calculate per round damage
-        int perRoundDamage = PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_LEVEL_BONUS_MODIFIER;
-
-        // add ignition effect
-        enemyHero.addOverTimeEffect(OverTimeEffects.Ignited, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, perRoundDamage);
-    }
-
-
-    @Override
-    public void useFirstAbility(Knight enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY1_KNIGHT_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+        // apply over time effect and deal damage
+        enemyHero.addOverTimeEffect(OverTimeEffects.Ignited, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);
+        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
     }
 
     @Override
-    public void useFirstAbility(Pyromancer enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY1_PYROMANCER_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float provideFirstAbilityRaceModifier(Hero enemyHero) {
+        return enemyHero.getFirstAbilityRaceModifier(this);
     }
 
     @Override
-    public void useFirstAbility(Rogue enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY1_ROGUE_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float provideSecondAbilityRaceModifier(Hero enemyHero) {
+        return enemyHero.getSecondAbilityRaceModifier(this);
     }
 
     @Override
-    public void useFirstAbility(Wizard enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY1_WIZARD_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Knight enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY1_KNIGHT_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Knight enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY2_KNIGHT_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Pyromancer enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY1_PYROMANCER_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Pyromancer enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY2_PYROMANCER_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Rogue enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY1_ROGUE_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Rogue enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY2_ROGUE_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Wizard enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY1_WIZARD_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Wizard enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = PyromancerConstants.PYROMANCER_ABILITY2_WIZARD_MODIFIER;
+    public float getSecondAbilityRaceModifier(Knight enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY2_KNIGHT_MODIFIER;
+    }
 
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    @Override
+    public float getSecondAbilityRaceModifier(Pyromancer enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY2_PYROMANCER_MODIFIER;
+    }
+
+    @Override
+    public float getSecondAbilityRaceModifier(Rogue enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY2_ROGUE_MODIFIER;
+    }
+
+    @Override
+    public float getSecondAbilityRaceModifier(Wizard enemyHero) {
+        return PyromancerConstants.PYROMANCER_ABILITY2_WIZARD_MODIFIER;
     }
 }

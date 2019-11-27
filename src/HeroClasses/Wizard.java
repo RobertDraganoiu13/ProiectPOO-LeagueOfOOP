@@ -9,94 +9,98 @@ public class Wizard extends Hero {
     }
 
     @Override
-    public void hitByFirstAbility(Hero enemyHero, TerrainType terrain) {
-        enemyHero.useFirstAbility(this, terrain);
+    public float provideFirstAbilityRaceModifier(Hero enemyHero) {
+        enemyHero.getFirstAbilityRaceModifier(this);
     }
 
     @Override
-    public void hitBySecondAbility(Hero enemyHero, TerrainType terrain) {
-        enemyHero.useSecondAbility(this, terrain);
+    public float provideSecondAbilityRaceModifier(Hero enemyHero) {
+        enemyHero.getSecondAbilityRaceModifier(this);
     }
 
     @Override
-    public void useFirstAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+    public void useFirstAbility(Hero enemyHero, TerrainType terrain) {
+        // base damage percentage + level adds
+        float abilityDamagePercentage = WizardConstants.WIZARD_ABILITY1_BASE_PERCENTAGE + this.getLevel() * WizardConstants.WIZARD_ABILITY1_LEVEL_BONUS_PERCENTAGE;
 
+        // compute terrain modifier
+        float terrainDamageModifier = 1.0f;
+        if(terrain == this.preferredTerrain) {
+            terrainDamageModifier = WizardConstants.WIZARD_BONUS_TERRAIN_PERCENTAGE_MODIFIER;
+        }
+
+        // apply modifiers on percentage
+        float totalPercent = abilityDamagePercentage * terrainDamageModifier;
+        int damage = Math.round(totalPercent * Math.min(WizardConstants.WIZARD_ABILITY1_MIN_DAMAGE_PERCENTAGE * enemyHero.getMaxHp(), enemyHero.getHp()));
+
+        // deal damage
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this));
     }
 
     @Override
-    public void useSecondAbilityGeneric(Hero enemyHero, TerrainType terrain, float raceModifier) {
+    public void useSecondAbility(Hero enemyHero, TerrainType terrain) {
+        // deal 0 damage and return if enemy hero is a wizard
+        if(enemyHero.provideSecondAbilityRaceModifier(this) == 0.0f) {
+            enemyHero.takeDamage(0, 0);
+            return;
+        }
 
+        // base damage percentage + level adds
+        float baseDamagePercentage = Math.min(WizardConstants.WIZARD_ABILITY2_MAX_PERCENTAGE,
+                                                WizardConstants.WIZARD_ABILITY2_BASE_PERCENTAGE + this.getLevel() * WizardConstants.WIZARD_ABILITY2_LEVEL_BONUS_PERCENTAGE)
+
+        // compute terrain modifier
+        float terrainDamageModifier = 1.0f;
+        if(terrain == this.preferredTerrain) {
+            terrainDamageModifier = WizardConstants.WIZARD_BONUS_TERRAIN_PERCENTAGE_MODIFIER;
+        }
+
+        // apply modifier on percentage
+        float totalPercent = baseDamagePercentage * terrainDamageModifier;
+
+        // calculate and deal total damage
+        int damageTaken = this.getLastDamageTaken();
+        int damage = Math.round(totalPercent * damageTaken);
+        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
     }
 
     @Override
-    public void useFirstAbility(Knight enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY1_KNIGHT_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Knight enemyHero) {
+        return WizardConstants.WIZARD_ABILITY1_KNIGHT_MODIFIER;
     }
 
     @Override
-    public void useFirstAbility(Pyromancer enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY1_PYROMANCER_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Pyromancer enemyHero) {
+        return WizardConstants.WIZARD_ABILITY1_PYROMANCER_MODIFIER;
     }
 
     @Override
-    public void useFirstAbility(Rogue enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY1_ROGUE_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Rogue enemyHero) {
+        return WizardConstants.WIZARD_ABILITY1_ROGUE_MODIFIER;
     }
 
     @Override
-    public void useFirstAbility(Wizard enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY1_WIZARD_MODIFIER;
-
-        // use ability
-        useFirstAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getFirstAbilityRaceModifier(Wizard enemyHero) {
+        return WizardConstants.WIZARD_ABILITY1_WIZARD_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Knight enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY2_KNIGHT_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getSecondAbilityRaceModifier(Knight enemyHero) {
+        return WizardConstants.WIZARD_ABILITY2_KNIGHT_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Pyromancer enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY2_PYROMANCER_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getSecondAbilityRaceModifier(Pyromancer enemyHero) {
+        return WizardConstants.WIZARD_ABILITY2_PYROMANCER_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Rogue enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY2_ROGUE_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getSecondAbilityRaceModifier(Rogue enemyHero) {
+        return WizardConstants.WIZARD_ABILITY2_ROGUE_MODIFIER;
     }
 
     @Override
-    public void useSecondAbility(Wizard enemyHero, TerrainType terrain) {
-        // get race modifier
-        float raceModifier = WizardConstants.WIZARD_ABILITY2_WIZARD_MODIFIER;
-
-        // use ability
-        useSecondAbilityGeneric(enemyHero, terrain, raceModifier);
+    public float getSecondAbilityRaceModifier(Wizard enemyHero) {
+        return 0.0f; // no effect on wizard
     }
 }

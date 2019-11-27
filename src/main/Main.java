@@ -3,7 +3,6 @@ package main;
 
 import InputOutput.GameInput;
 import InputOutput.GameInputLoader;
-import Map.TerrainType;
 
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public class Main {
         System.out.println(heroes);
         heroes.get(1).setLevel(10);
         for(int i = 1; i < 4; ++i) {
-            heroes.get(i).hitByFirstAbility(heroes.get(0), TerrainType.Volcanic);
+            heroes.get(i).provideFirstAbilityRaceModifier(heroes.get(0));
         }
         System.out.println(heroes);
 
