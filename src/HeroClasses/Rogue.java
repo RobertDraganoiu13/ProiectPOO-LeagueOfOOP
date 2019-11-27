@@ -20,7 +20,7 @@ public class Rogue extends Hero {
         float terrainDamageModifier = 1.0f;
         float critDamageModifier = 1.0f;
         if(terrain == this.preferredTerrain) {
-            if(backstabHits == RogueConstants.ROGUE_ABILITY1_BACKSTAB_ROUNDS - 1) {
+            if(backstabHits % RogueConstants.ROGUE_ABILITY1_BACKSTAB_ROUNDS == 0) {
                 critDamageModifier = RogueConstants.ROGUE_ABILITY1_CRIT_MODIFIER;
             }
             terrainDamageModifier = RogueConstants.ROGUE_BONUS_TERRAIN_PERCENTAGE_MODIFIER;

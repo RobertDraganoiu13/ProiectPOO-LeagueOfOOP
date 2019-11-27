@@ -1,9 +1,11 @@
-package main;
+package Main;
 
 import HeroClasses.*;
 import Map.GameMap;
 import Map.TerrainType;
+import fileio.implementations.FileWriter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -11,20 +13,27 @@ public class Game {
     ArrayList<Hero> heroes;
     ArrayList<String> movements;
     GameMap gameMap;
+    FileWriter fileWriter;
 
-    public Game(int rounds, ArrayList<Hero> heroes, ArrayList<String> movements, GameMap gameMap) {
+    public Game(int rounds, ArrayList<Hero> heroes, ArrayList<String> movements, GameMap gameMap, String outputPath) throws IOException {
         this.rounds = rounds;
         this.heroes = heroes;
         this.movements = movements;
         this.gameMap = gameMap;
+        this.fileWriter = new FileWriter(outputPath);
     }
 
-    public void start() {
+    public void start() throws IOException {
         for(int i = 0; i < rounds; ++i) {
-            // move heroes if not incapacitated and take damage from on hit effects
+//            System.out.println("Round: "+ i);
+            // move heroes if not incapacitated
             moveHeroes(movements.get(i));
+            // apply over time effects
+            applyAllOverTimeEffects();
             // battle
             sustainAllBattles();
+//            printPlayerStats();
+//            System.out.println("----END ROUND----");
         }
         printPlayerStats();
     }
@@ -46,6 +55,12 @@ public class Game {
                     heroes.get(i).moveRight();
                     break;
             }
+        }
+    }
+
+    public void applyAllOverTimeEffects() {
+        for(var hero : heroes) {
+            hero.applyOverTimeEffects();
         }
     }
 
@@ -109,7 +124,7 @@ public class Game {
         }
     }
 
-    private void printPlayerStats() {
+    private void printPlayerStats() throws IOException {
         for(var hero: heroes) {
             char type;
             if(hero instanceof Knight) {
@@ -121,12 +136,23 @@ public class Game {
             } else {
                 type = 'W';
             }
-            System.out.print(type);
+
+            fileWriter.writeCharacter(type);
             if(!hero.isAlive()) {
-                System.out.println(" dead");
+                fileWriter.writeWord(" dead");
+                fileWriter.writeNewLine();
             } else {
-                System.out.println(" " + hero.getLevel() + " " + hero.getXp() + " " + hero.getHp() + " " + hero.getX() + " " + hero.getY());
+                fileWriter.writeWord(" " + hero.getLevel() + " " + hero.getXp() + " " + hero.getHp() + " " + hero.getX() + " " + hero.getY());
+                fileWriter.writeNewLine();
             }
+
+//            System.out.print(type);
+//            if(!hero.isAlive()) {
+//                System.out.println(" dead");
+//            } else {
+//                System.out.println(" " + hero.getLevel() + " " + hero.getXp() + " " + hero.getHp() + " " + hero.getX() + " " + hero.getY());
+//            }
         }
+        fileWriter.close();
     }
 }

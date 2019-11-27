@@ -56,22 +56,14 @@ public abstract class Hero {
         return false;
     }
 
-    // TODO: make apply effects function outside move, use it also whe players stay
-    public void moveUp() {
-        // move only if not incapacitated
-        if(overTimeEffect != OverTimeEffects.Incapacitated) {
-            x--;
+    public void applyOverTimeEffects() {
+        // return if does not have damage effect
+        if(overTimeEffect == OverTimeEffects.None) {
+            return;
         }
 
-        // take damage if it exists
-        if(overTimeDamage > 0) {
-            takeDamage(overTimeDamage, 0);
-        }
-
-        // decrement rounds left if necessary
-        if(overTimeEffect != OverTimeEffects.None) {
-            roundsLeftOfOverTimeEffect--;
-        }
+        takeOverTimeDamage(this.overTimeDamage);
+        roundsLeftOfOverTimeEffect--;
 
         // remove over time effect if rounds passed
         if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
@@ -79,26 +71,17 @@ public abstract class Hero {
             overTimeDamage = 0;
         }
     }
+
+    public void moveUp() {
+        // move only if not incapacitated
+        if(overTimeEffect != OverTimeEffects.Incapacitated) {
+            x--;
+        }
+    }
     public void moveDown() {
         // move only if not incapacitated
         if(overTimeEffect != OverTimeEffects.Incapacitated) {
             x++;
-        }
-
-        // take damage if it exists
-        if(overTimeDamage > 0) {
-            takeDamage(overTimeDamage, 0);
-        }
-
-        // decrement rounds left if necessary
-        if(overTimeEffect != OverTimeEffects.None) {
-            roundsLeftOfOverTimeEffect--;
-        }
-
-        // remove over time effect if rounds passed
-        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
-            overTimeEffect = OverTimeEffects.None;
-            overTimeDamage = 0;
         }
     }
 
@@ -107,44 +90,13 @@ public abstract class Hero {
         if(overTimeEffect != OverTimeEffects.Incapacitated) {
             y--;
         }
-
-        // take damage if it exists
-        if(overTimeDamage > 0) {
-            takeDamage(overTimeDamage, 0);
-        }
-
-        // decrement rounds left if necessary
-        if(overTimeEffect != OverTimeEffects.None) {
-            roundsLeftOfOverTimeEffect--;
-        }
-
-        // remove over time effect if rounds passed
-        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
-            overTimeEffect = OverTimeEffects.None;
-            overTimeDamage = 0;
-        }
     }
 
     public void moveRight() {
         // move only if not incapacitated
         if(overTimeEffect != OverTimeEffects.Incapacitated) {
             y++;
-        }
-
-        // take damage if it exists
-        if(overTimeDamage > 0) {
-            takeDamage(overTimeDamage, 0);
-        }
-
-        // decrement rounds left if necessary
-        if(overTimeEffect != OverTimeEffects.None) {
-            roundsLeftOfOverTimeEffect--;
-        }
-
-        // remove over time effect if rounds passed
-        if(overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
-            overTimeEffect = OverTimeEffects.None;
-            overTimeDamage = 0;
+            return;
         }
     }
 
@@ -153,6 +105,10 @@ public abstract class Hero {
     }
 
     public int getMaxHp() { return maxHp; }
+
+    private void takeOverTimeDamage(int dmg) {
+        this.hp -= dmg;
+    }
 
     public void takeDamage(int dmg, float raceModifier) {
         if(lastDamageTakenCounter == Constants.ABILITIES_PER_ROUND) {
@@ -184,8 +140,10 @@ public abstract class Hero {
         this.xp += tempExp;
 
         // update level based on total xp
-        if(this.xp >= Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2) {
+        while(this.xp >= Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2) {
             this.level++;
+            this.maxHp += this.bonusHpPerLevel;
+            this.hp = this.maxHp;
         }
     }
 

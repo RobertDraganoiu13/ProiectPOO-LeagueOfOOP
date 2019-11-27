@@ -1,3 +1,6 @@
 .idea/
 Tema2.iml
 Testing/
+src/checker/
+src/checker.sh
+src/FileIO.jar
