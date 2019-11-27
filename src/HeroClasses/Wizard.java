@@ -31,10 +31,10 @@ public class Wizard extends Hero {
 
         // apply modifiers on percentage
         float totalPercent = abilityDamagePercentage * terrainDamageModifier;
-        int damage = Math.round(totalPercent * Math.min(WizardConstants.WIZARD_ABILITY1_MIN_DAMAGE_PERCENTAGE * enemyHero.getMaxHp(), enemyHero.getHp()));
+        int damage = Math.round(enemyHero.provideFirstAbilityRaceModifier(this) * totalPercent * Math.min(WizardConstants.WIZARD_ABILITY1_MIN_DAMAGE_PERCENTAGE * enemyHero.getMaxHp(), enemyHero.getHp()));
 
         // deal damage
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, 1.0f);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class Wizard extends Hero {
 
         // calculate and deal total damage
         int damageTaken = this.getLastDamageTaken();
-        int damage = Math.round(totalPercent * damageTaken);
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
+        int damage = Math.round(enemyHero.provideSecondAbilityRaceModifier(this) * totalPercent * damageTaken);
+        enemyHero.takeDamage(damage,1.0f );
     }
 
     @Override

@@ -62,7 +62,7 @@ public abstract class Hero {
             return;
         }
 
-        takeOverTimeDamage(this.overTimeDamage);
+        takeUnmonitoredDamage(this.overTimeDamage);
         roundsLeftOfOverTimeEffect--;
 
         // remove over time effect if rounds passed
@@ -106,8 +106,13 @@ public abstract class Hero {
 
     public int getMaxHp() { return maxHp; }
 
-    private void takeOverTimeDamage(int dmg) {
+    private void takeUnmonitoredDamage(int dmg) {
         this.hp -= dmg;
+
+        // update status if hp goes to 0 or below
+        if(this.hp <= 0) {
+            isAlive = false;
+        }
     }
 
     public void takeDamage(int dmg, float raceModifier) {

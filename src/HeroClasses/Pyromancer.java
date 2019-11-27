@@ -28,6 +28,7 @@ public class Pyromancer extends Hero {
     public void useSecondAbility(Hero enemyHero, TerrainType terrain) {
         // base damage + level adds
         int abilityDamage = PyromancerConstants.PYROMANCER_ABILITY2_BASE_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY2_LEVEL_BONUS_MODIFIER;
+        int abilityOverTimeDamage = PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_BASE_DAMAGE + this.getLevel() * PyromancerConstants.PYROMANCER_ABILITY2_OVER_TIME_LEVEL_BONUS_MODIFIER;
 
         // compute terrain modifier
         float terrainDamageModifier = 1.0f;
@@ -37,7 +38,7 @@ public class Pyromancer extends Hero {
 
         // apply modifier
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this));
+        int overTimeDamage = Math.round(Math.round(abilityOverTimeDamage * terrainDamageModifier) * enemyHero.provideSecondAbilityRaceModifier(this));
 
         // apply over time effect and deal damage
         enemyHero.addOverTimeEffect(OverTimeEffects.Damaged, PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);

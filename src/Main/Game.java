@@ -96,7 +96,7 @@ public class Game {
             combatant1.addXp(levelCombatant2);
         }
 
-        if(!combatant2.isAlive()) {
+        if(!combatant1.isAlive()) {
             combatant2.addXp(levelCombatant1);
         }
     }
