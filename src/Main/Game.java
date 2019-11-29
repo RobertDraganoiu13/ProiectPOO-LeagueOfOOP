@@ -28,6 +28,10 @@ public class Game {
         this.fileWriter = new FileWriter(outputPath);
     }
 
+    /**
+     * Runs all rounds of the game.
+     * @throws IOException
+     */
     public final void start() throws IOException {
         for (int i = 0; i < rounds; ++i) {
             // move heroes if not incapacitated

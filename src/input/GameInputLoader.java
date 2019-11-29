@@ -15,6 +15,12 @@ public final class GameInputLoader {
         }
     }
 
+    /**
+     * Reads and adds content from input file into raw data types, returns GameInput instance,
+     * which transforms it into objects further used by the application.
+     * @return
+     * @throws IOException
+     */
     public GameInput load() throws IOException {
         int height = fileSystem.nextInt();
         int width = fileSystem.nextInt();

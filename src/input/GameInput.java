@@ -12,6 +12,15 @@ public final class GameInput {
     private int numOfRounds;
     private ArrayList<String> movements;
 
+    /**
+     * Turns input data into object types further used inside the application.
+     * @param height
+     * @param width
+     * @param terrain
+     * @param heroesData
+     * @param rounds
+     * @param movements
+     */
     public GameInput(final int height, final int width, final char[][] terrain,
                      final ArrayList<HeroInputData> heroesData, final int rounds,
                      final ArrayList<String> movements) {

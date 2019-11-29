@@ -50,6 +50,11 @@ public abstract class Hero {
         return y;
     }
 
+    /**
+     * Checks collision on map with another player.
+     * @param enemyHero
+     * @return
+     */
     public final boolean hasSameCoordsAs(final Hero enemyHero) {
         if (this.x == enemyHero.getX() && this.y == enemyHero.getY()) {
             return true;
@@ -57,6 +62,9 @@ public abstract class Hero {
         return false;
     }
 
+    /**
+     * Applies damage from over time effects.
+     */
     public final void applyOverTimeEffects() {
         // return if does not have damage effect
         if (overTimeEffect == OverTimeEffects.None) {
@@ -73,6 +81,9 @@ public abstract class Hero {
         }
     }
 
+    /**
+     * Move functions, also checking for paralysis/stun.
+     */
     public final void moveUp() {
         // move only if not incapacitated
         if (overTimeEffect != OverTimeEffects.Incapacitated) {
@@ -108,6 +119,10 @@ public abstract class Hero {
         return maxHp;
     }
 
+    /**
+     * Apply damage without adding race modifier and without saving last damage taken.
+     * @param dmg
+     */
     private void takeOverTimeDamage(final int dmg) {
         this.hp -= dmg;
 
@@ -117,6 +132,11 @@ public abstract class Hero {
         }
     }
 
+    /**
+     * Apply damage after adding race modifier and save last damage taken (witout race modifier).
+     * @param dmg
+     * @param raceModifier
+     */
     public final void takeDamage(final int dmg, final float raceModifier) {
         if (lastDamageTakenCounter == Constants.ABILITIES_PER_ROUND) {
             lastDamageTaken = 0;
@@ -141,6 +161,10 @@ public abstract class Hero {
         return this.xp;
     }
 
+    /**
+     * Add xp and level up if next threshold is reached.
+     * @param enemyLevel
+     */
     public final void addXp(final int enemyLevel) {
         // compute temp xp based on enemyLevel
         int tempExp = Math.max(0, Constants.XP_CONSTANT1
@@ -175,15 +199,27 @@ public abstract class Hero {
         this.overTimeDamage = damage;
     }
 
-    // use abilities implemented by all hero types
+    /**
+     * Use abilities implemented by all hero types.
+     * @param enemyHero
+     * @param terrain
+     */
     public abstract void useFirstAbility(Hero enemyHero, TerrainType terrain);
     public abstract void useSecondAbility(Hero enemyHero, TerrainType terrain);
 
-    // double dispatch "accept" methods which provide race modifiers for enemy hero
+    /**
+     * Double dispatch "accept" methods which provide race modifiers for enemy hero.
+     * @param enemyHero
+     * @return
+     */
     public abstract float provideFirstAbilityRaceModifier(Hero enemyHero);
     public abstract float provideSecondAbilityRaceModifier(Hero enemyHero);
 
-    // double dispatch "interact with" methods which return current race modifier for enemy hero
+    /**
+     * Double dispatch "interact with" methods which return current race modifier for enemy hero.
+     * @param enemyHero
+     * @return
+     */
     public abstract float getFirstAbilityRaceModifier(Knight enemyHero);
     public abstract float getFirstAbilityRaceModifier(Pyromancer enemyHero);
     public abstract float getFirstAbilityRaceModifier(Rogue enemyHero);

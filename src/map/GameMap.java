@@ -16,6 +16,12 @@ public final class GameMap {
         }
     }
 
+    /**
+     * Transforms map cell into terrain type.
+     * @param x
+     * @param y
+     * @param terrain
+     */
     public void setCellAt(final int x, final int y, final char terrain) {
         switch (terrain) {
             case 'W':

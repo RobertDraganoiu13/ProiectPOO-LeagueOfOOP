@@ -9,6 +9,10 @@ public final class HeroFactory {
 
     private HeroFactory() { }
 
+    /**
+     * Return instance of singleton.
+     * @return
+     */
     public static HeroFactory getInstance() {
         if (instance == null) {
             instance = new HeroFactory();
@@ -16,6 +20,11 @@ public final class HeroFactory {
         return instance;
     }
 
+    /**
+     * Creates a hero based on input data.
+     * @param data
+     * @return
+     */
     private Hero createHero(final HeroInputData data) {
         switch (data.getType()) {
             case 'K':
@@ -30,6 +39,11 @@ public final class HeroFactory {
         return new Wizard(data.getX(), data.getY());
     }
 
+    /**
+     * Returns list of Hero objects created based on input data.
+     * @param heroesData
+     * @return
+     */
     public ArrayList<Hero> createAllHeroes(final ArrayList<HeroInputData> heroesData) {
         ArrayList<Hero> heroes = new ArrayList<Hero>();
         // create players using heroesData
