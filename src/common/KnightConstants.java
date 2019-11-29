@@ -1,6 +1,7 @@
 package common;
 
-public class KnightConstants {
+public final class KnightConstants {
+    private KnightConstants() { }
     public static final int KNIGHT_BASE_HP = 900;
     public static final int KNIGHT_BONUS_HP_PER_LEVEL = 80;
     public static final float KNIGHT_BONUS_TERRAIN_PERCENTAGE_MODIFIER = 1.15f;

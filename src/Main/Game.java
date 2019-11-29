@@ -1,21 +1,26 @@
 package Main;
 
-import HeroClasses.*;
-import Map.GameMap;
-import Map.TerrainType;
+import hero.Hero;
+import hero.Knight;
+import hero.Pyromancer;
+import hero.Rogue;
+import hero.Wizard;
+import map.GameMap;
+import map.TerrainType;
 import fileio.implementations.FileWriter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
-    int rounds;
-    ArrayList<Hero> heroes;
-    ArrayList<String> movements;
-    GameMap gameMap;
-    FileWriter fileWriter;
+    private int rounds;
+    private ArrayList<Hero> heroes;
+    private ArrayList<String> movements;
+    private GameMap gameMap;
+    private FileWriter fileWriter;
 
-    public Game(int rounds, ArrayList<Hero> heroes, ArrayList<String> movements, GameMap gameMap, String outputPath) throws IOException {
+    public Game(final int rounds, final ArrayList<Hero> heroes, final ArrayList<String> movements,
+                final GameMap gameMap, final String outputPath) throws IOException {
         this.rounds = rounds;
         this.heroes = heroes;
         this.movements = movements;
@@ -23,24 +28,21 @@ public class Game {
         this.fileWriter = new FileWriter(outputPath);
     }
 
-    public void start() throws IOException {
-        for(int i = 0; i < rounds; ++i) {
-//            System.out.println("Round: "+ i);
+    public final void start() throws IOException {
+        for (int i = 0; i < rounds; ++i) {
             // move heroes if not incapacitated
             moveHeroes(movements.get(i));
             // apply over time effects
             applyAllOverTimeEffects();
             // battle
             sustainAllBattles();
-//            printPlayerStats();
-//            System.out.println("----END ROUND----");
         }
         printPlayerStats();
     }
 
-    private void moveHeroes(String movements) {
-        for(int i = 0; i < movements.length(); ++i) {
-            char movement = movements.charAt(i);
+    private void moveHeroes(final String moves) {
+        for (int i = 0; i < moves.length(); ++i) {
+            char movement = moves.charAt(i);
             switch (movement) {
                 case 'U':
                     heroes.get(i).moveUp();
@@ -54,22 +56,24 @@ public class Game {
                 case 'R':
                     heroes.get(i).moveRight();
                     break;
+                default:
+                    break;
             }
         }
     }
 
-    public void applyAllOverTimeEffects() {
-        for(var hero : heroes) {
+    public final void applyAllOverTimeEffects() {
+        for (var hero : heroes) {
             hero.applyOverTimeEffects();
         }
     }
 
-    private void battle(Hero hero1, Hero hero2) {
+    private void battle(final Hero hero1, final Hero hero2) {
         Hero combatant1;
         Hero combatant2;
 
         // ensure wizard hits second so he can use deflect
-        if(hero1 instanceof Wizard) {
+        if (hero1 instanceof Wizard) {
             combatant1 = hero2;
             combatant2 = hero1;
         } else {
@@ -92,11 +96,11 @@ public class Game {
         int levelCombatant1 = combatant1.getLevel();
         int levelCombatant2 = combatant2.getLevel();
 
-        if(!combatant2.isAlive()) {
+        if (!combatant2.isAlive()) {
             combatant1.addXp(levelCombatant2);
         }
 
-        if(!combatant1.isAlive()) {
+        if (!combatant1.isAlive()) {
             combatant2.addXp(levelCombatant1);
         }
     }
@@ -104,17 +108,18 @@ public class Game {
     private void sustainAllBattles() {
         // make battled array, only battle if boolean from hero index is false
         ArrayList<Boolean> battled = new ArrayList<>();
-        for(int i = 0; i < heroes.size(); ++i) {
+        for (int i = 0; i < heroes.size(); ++i) {
             battled.add(false);
         }
 
         // check for all collisions
-        for(int i = 0; i < heroes.size(); ++i) {
-            for(int j = 0; j < heroes.size(); ++j) {
-                if(i ==j) {
+        for (int i = 0; i < heroes.size(); ++i) {
+            for (int j = 0; j < heroes.size(); ++j) {
+                if (i == j) {
                     continue;
                 }
-                if(heroes.get(i).hasSameCoordsAs(heroes.get(j)) && heroes.get(i).isAlive() && heroes.get(j).isAlive()
+                if (heroes.get(i).hasSameCoordsAs(heroes.get(j))
+                        && heroes.get(i).isAlive() && heroes.get(j).isAlive()
                         && !battled.get(i) && !battled.get(j)) {
                     battled.set(i, true);
                     battled.set(i, true);
@@ -125,33 +130,28 @@ public class Game {
     }
 
     private void printPlayerStats() throws IOException {
-        for(var hero: heroes) {
+        for (var hero: heroes) {
             char type;
-            if(hero instanceof Knight) {
+            if (hero instanceof Knight) {
                 type = 'K';
-            } else if(hero instanceof Pyromancer) {
+            } else if (hero instanceof Pyromancer) {
                 type = 'P';
-            } else if(hero instanceof Rogue) {
+            } else if (hero instanceof Rogue) {
                 type = 'R';
             } else {
                 type = 'W';
             }
 
             fileWriter.writeCharacter(type);
-            if(!hero.isAlive()) {
+            if (!hero.isAlive()) {
                 fileWriter.writeWord(" dead");
                 fileWriter.writeNewLine();
             } else {
-                fileWriter.writeWord(" " + hero.getLevel() + " " + hero.getXp() + " " + hero.getHp() + " " + hero.getX() + " " + hero.getY());
+                fileWriter.writeWord(" " + hero.getLevel() + " "
+                        + hero.getXp() + " " + hero.getHp() + " " + hero.getX()
+                        + " " + hero.getY());
                 fileWriter.writeNewLine();
             }
-
-//            System.out.print(type);
-//            if(!hero.isAlive()) {
-//                System.out.println(" dead");
-//            } else {
-//                System.out.println(" " + hero.getLevel() + " " + hero.getXp() + " " + hero.getHp() + " " + hero.getX() + " " + hero.getY());
-//            }
         }
         fileWriter.close();
     }

@@ -1,6 +1,7 @@
 package common;
 
-public class PyromancerConstants {
+public final class PyromancerConstants {
+    private PyromancerConstants() { }
     public static final int PYROMANCER_BASE_HP = 500;
     public static final int PYROMANCER_BONUS_HP_PER_LEVEL = 50;
     public static final float PYROMANCER_BONUS_TERRAIN_PERCENTAGE_MODIFIER = 1.25f;

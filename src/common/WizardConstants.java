@@ -1,6 +1,7 @@
 package common;
 
-public class WizardConstants {
+public final class WizardConstants {
+    private WizardConstants() { }
     public static final int WIZARD_BASE_HP = 400;
     public static final int WIZARD_BONUS_HP_PER_LEVEL = 30;
     public static final float WIZARD_BONUS_TERRAIN_PERCENTAGE_MODIFIER = 1.1f;

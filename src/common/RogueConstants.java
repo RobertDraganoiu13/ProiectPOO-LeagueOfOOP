@@ -1,6 +1,7 @@
 package common;
 
-public class RogueConstants {
+public final class RogueConstants {
+    private RogueConstants() { }
     public static final int ROGUE_BASE_HP = 600;
     public static final int ROGUE_BONUS_HP_PER_LEVEL = 40;
     public static final float ROGUE_BONUS_TERRAIN_PERCENTAGE_MODIFIER = 1.15f;

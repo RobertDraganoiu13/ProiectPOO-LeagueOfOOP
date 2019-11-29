@@ -1,6 +1,7 @@
 package common;
 
-public class Constants {
+public final class Constants {
+    private Constants() { }
     public static final int ABILITIES_PER_ROUND = 2;
     public static final int XP_CONSTANT1 = 200;
     public static final int XP_CONSTANT2 = 40;
