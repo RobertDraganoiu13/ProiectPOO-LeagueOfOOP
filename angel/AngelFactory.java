@@ -50,7 +50,7 @@ public final class AngelFactory {
         for(int i = 0; i < angeldataArray.size(); ++i) {
             angels.add(new ArrayList<Angel>());
             for(var data : angeldataArray.get(i)) {
-                angels.get(i).add(createAngel(data))
+                angels.get(i).add(createAngel(data));
             }
         }
         return angels;

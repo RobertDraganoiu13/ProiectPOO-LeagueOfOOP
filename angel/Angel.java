@@ -13,8 +13,14 @@ public abstract class Angel {
         this.x = x;
         this.y = y;
     }
+
     abstract void affect(Knight knight);
     abstract void affect(Pyromancer pyromancer);
     abstract void affect(Rogue rogue);
     abstract void affect(Wizard wizard);
+
+    @Override
+    public String toString() {
+        return this.getClass().getName() + " " + x + " " + y;
+    }
 }
