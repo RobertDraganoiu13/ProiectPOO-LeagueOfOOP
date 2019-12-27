@@ -53,4 +53,6 @@ public final class GameInput {
     public ArrayList<String> getMovements() {
         return movements;
     }
+
+    public ArrayList<ArrayList<Angel>> getAngels() { return angels; }
 }

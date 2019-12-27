@@ -12,9 +12,11 @@ public final class  Main {
         GameInputLoader loader = new GameInputLoader(args[0], args[1]);
         GameInput input = loader.load();
 
+        System.out.println(input.getAngels());
+
         // start game
         Game game = new Game(input.getNumOfRounds(), input.getHeroes(),
-                                input.getMovements(), input.getGameMap(), args[1]);
+                                input.getMovements(), input.getGameMap(), input.getAngels(), args[1]);
         game.start();
     }
 }

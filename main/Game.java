@@ -1,5 +1,6 @@
 package main;
 
+import angel.Angel;
 import hero.Hero;
 import hero.Knight;
 import hero.Pyromancer;
@@ -15,14 +16,16 @@ import java.util.ArrayList;
 public class Game {
     private int rounds;
     private ArrayList<Hero> heroes;
+    private ArrayList<ArrayList<Angel>> angels;
     private ArrayList<String> movements;
     private GameMap gameMap;
     private FileWriter fileWriter;
 
     public Game(final int rounds, final ArrayList<Hero> heroes, final ArrayList<String> movements,
-                final GameMap gameMap, final String outputPath) throws IOException {
+                final GameMap gameMap, final ArrayList<ArrayList<Angel>> angels, final String outputPath) throws IOException {
         this.rounds = rounds;
         this.heroes = heroes;
+        this.angels = angels;
         this.movements = movements;
         this.gameMap = gameMap;
         this.fileWriter = new FileWriter(outputPath);
@@ -40,6 +43,10 @@ public class Game {
             applyAllOverTimeEffects();
             // battle
             sustainAllBattles();
+            // spawn angels
+            // TODO:
+            // apply angel effects
+            // TODO:
         }
         printPlayerStats();
     }
