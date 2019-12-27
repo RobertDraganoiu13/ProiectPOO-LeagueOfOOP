@@ -5,9 +5,16 @@ import hero.Pyromancer;
 import hero.Rogue;
 import hero.Wizard;
 
-public interface Angel {
-    void affect(Knight knight);
-    void affect(Pyromancer pyromancer);
-    void affect(Rogue rogue);
-    void affect(Wizard wizard);
+public abstract class Angel {
+    int x;
+    int y;
+
+    public Angel(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    abstract void affect(Knight knight);
+    abstract void affect(Pyromancer pyromancer);
+    abstract void affect(Rogue rogue);
+    abstract void affect(Wizard wizard);
 }

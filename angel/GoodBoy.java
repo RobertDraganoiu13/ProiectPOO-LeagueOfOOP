@@ -5,7 +5,11 @@ import hero.Pyromancer;
 import hero.Rogue;
 import hero.Wizard;
 
-public final class GoodBoy implements Angel {
+public final class GoodBoy extends Angel {
+    public GoodBoy(int x, int y) {
+        super(x, y);
+    }
+
     @Override
     public void affect(final Knight knight) {
 

@@ -5,8 +5,8 @@ import hero.Pyromancer;
 import hero.Rogue;
 import hero.Wizard;
 
-public final class XPAngel extends Angel {
-    public XPAngel(int x, int y) {
+public final class SmallAngel extends Angel {
+    public SmallAngel(int x, int y) {
         super(x, y);
     }
 

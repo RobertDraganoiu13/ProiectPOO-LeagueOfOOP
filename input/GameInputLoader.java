@@ -33,6 +33,7 @@ public final class GameInputLoader {
                 charMap[i][j] = line.charAt(j);
             }
         }
+
          // add heroes data to input data array
         int numOfHeroes = fileSystem.nextInt();
         ArrayList<HeroInputData> heroesData = new ArrayList<HeroInputData>();
@@ -49,6 +50,18 @@ public final class GameInputLoader {
         for (int i = 0; i < rounds; ++i) {
             movements.add(fileSystem.nextWord());
         }
-        return new GameInput(height, width, charMap, heroesData, rounds, movements);
+
+        // add angel types to angel types array
+        ArrayList<ArrayList<AngelInputData>> angelDataArray = new ArrayList<ArrayList<AngelInputData>>();
+        for (int i = 0; i < rounds; ++i) {
+            angelDataArray.add(new ArrayList<AngelInputData>());
+            int count = fileSystem.nextInt();
+            for(int j = 0; j < count; ++j) {
+                String data = fileSystem.nextWord();
+                angelDataArray.get(i).add(new AngelInputData(data));
+            }
+
+        }
+        return new GameInput(height, width, charMap, heroesData, rounds, movements, angelDataArray);
     }
 }

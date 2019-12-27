@@ -1,5 +1,0 @@
-Starting audit...
-[ERROR] /mnt/d/_Eclipse-Java/Tema2/src/main/Game.java:1:9: Name 'main' must match pattern '^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$'. [PackageName]
-[ERROR] /mnt/d/_Eclipse-Java/Tema2/src/main/main.java:1:9: Name 'main' must match pattern '^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$'. [PackageName]
-Audit done.
-Checkstyle ends with 2 errors.
