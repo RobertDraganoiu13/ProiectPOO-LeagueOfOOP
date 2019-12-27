@@ -13,6 +13,9 @@ public abstract class Hero {
     protected int xp;
     protected int level;
     protected TerrainType preferredTerrain;
+    protected float angelDamageModifiers;
+
+    // over time damage management
     protected int roundsLeftOfDamageOverTime;
     protected int roundsLeftOfOverTimeEffect;
     protected OverTimeEffects overTimeEffect;
@@ -71,7 +74,7 @@ public abstract class Hero {
             return;
         }
 
-        takeOverTimeDamage(this.overTimeDamage);
+        takeUnmonitoredDamage(this.overTimeDamage);
         roundsLeftOfOverTimeEffect--;
 
         // remove over time effect if rounds passed
@@ -115,15 +118,23 @@ public abstract class Hero {
         return hp;
     }
 
+    public final void addHp(int bonus) { hp += bonus; }
+
+    public final void revive(int hp) {
+        this.isAlive = true;
+        this.hp = hp;
+    }
+
     public final int getMaxHp() {
         return maxHp;
     }
 
     /**
      * Apply damage without adding race modifier and without saving last damage taken.
+     * Used for over time dmg and angel dmg.
      * @param dmg
      */
-    private void takeOverTimeDamage(final int dmg) {
+    public void takeUnmonitoredDamage(final int dmg) {
         this.hp -= dmg;
 
         // update status if hp goes to 0 or below
@@ -180,6 +191,17 @@ public abstract class Hero {
         }
     }
 
+    public final void addXpOutsideBattle(final int xp) {
+        this.xp += xp;
+    }
+
+    public final void levelUp() {
+        this.level++;
+        this.xp = Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2;
+        this.maxHp += this.bonusHpPerLevel;
+        this.hp = this.maxHp;
+    }
+
     public final int getLevel() {
         return level;
     }
@@ -197,6 +219,10 @@ public abstract class Hero {
         this.overTimeEffect = effect;
         this.roundsLeftOfOverTimeEffect = duration;
         this.overTimeDamage = damage;
+    }
+
+    public void addToAngelDamageModifiers(float angelDamageModifiers) {
+        this.angelDamageModifiers += angelDamageModifiers;
     }
 
     /**

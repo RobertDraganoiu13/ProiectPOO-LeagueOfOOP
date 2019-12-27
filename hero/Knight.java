@@ -4,6 +4,16 @@ import map.TerrainType;
 import common.KnightConstants;
 
 public final class Knight extends Hero {
+    private float ability1_KnightModifier;
+    private float ability1_PyromancerModifier;
+    private float ability1_RogueModifier;
+    private float ability1_WizardModifier;
+
+    private float ability2_KnightModifier;
+    private float ability2_PyromancerModifier;
+    private float ability2_RogueModifier;
+    private float ability2_WizardModifier;
+
     public Knight(final int x, final int y) {
         super(x, y, KnightConstants.KNIGHT_BASE_HP,
                 KnightConstants.KNIGHT_BONUS_HP_PER_LEVEL, TerrainType.Land);
@@ -33,7 +43,7 @@ public final class Knight extends Hero {
 
         // calculate and deal total damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + angelDamageModifiers);
     }
 
     @Override

@@ -18,9 +18,4 @@ public abstract class Angel {
     abstract void affect(Pyromancer pyromancer);
     abstract void affect(Rogue rogue);
     abstract void affect(Wizard wizard);
-
-    @Override
-    public String toString() {
-        return this.getClass().getName() + " " + x + " " + y;
-    }
 }
