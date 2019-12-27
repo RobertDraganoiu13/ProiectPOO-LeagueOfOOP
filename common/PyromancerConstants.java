@@ -22,4 +22,11 @@ public final class PyromancerConstants {
     public static final float PYROMANCER_ABILITY2_ROGUE_MODIFIER = 0.8f;
     public static final float PYROMANCER_ABILITY2_WIZARD_MODIFIER = 1.05f;
     public static final int   PYROMANCER_ABILITY2_ROUNDS_IGNITED = 2;
+
+    public static final int PYROMANCER_SMALL_LIFE_DIVISOR = 4;
+    public static final int PYROMANCER_BIG_LIFE_DIVISOR = 3;
+    public static final int PYROMANCER_STRATEGY1_DIVISOR_FOR_LOST_HP = 4;
+    public static final float PYROMANCER_STRATEGY1_DAMAGE_MODIFIER = 0.7f;
+    public static final int PYROMANCER_STRATEGY2_DIVISOR_FOR_WON_HP = 3;
+    public static final float PYROMANCER_STRATEGY2_DAMAGE_MODIFIER = -0.3f;
 }

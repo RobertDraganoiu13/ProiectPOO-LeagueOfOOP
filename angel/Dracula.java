@@ -16,7 +16,7 @@ public final class Dracula extends Angel {
         if(knight.isAlive() == false) {
             return;
         }
-        knight.addToAngelDamageModifiers(AngelConstants.DRACULA_KNIGHT_MODIFIER);
+        knight.addToAdditionalDamageModifiers(AngelConstants.DRACULA_KNIGHT_MODIFIER);
         knight.takeUnmonitoredDamage(AngelConstants.DRACULA_KNIGHT_DMG);
     }
 
@@ -25,7 +25,7 @@ public final class Dracula extends Angel {
         if(pyromancer.isAlive() == false) {
             return;
         }
-        pyromancer.addToAngelDamageModifiers(AngelConstants.DRACULA_PYROMANCER_MODIFIER);
+        pyromancer.addToAdditionalDamageModifiers(AngelConstants.DRACULA_PYROMANCER_MODIFIER);
         pyromancer.takeUnmonitoredDamage(AngelConstants.DRACULA_PYROMANCER_DMG);
     }
 
@@ -34,7 +34,7 @@ public final class Dracula extends Angel {
         if(rogue.isAlive() == false) {
             return;
         }
-        rogue.addToAngelDamageModifiers(AngelConstants.DRACULA_ROGUE_MODIFIER);
+        rogue.addToAdditionalDamageModifiers(AngelConstants.DRACULA_ROGUE_MODIFIER);
         rogue.takeUnmonitoredDamage(AngelConstants.DRACULA_ROGUE_DMG);
     }
 
@@ -43,7 +43,7 @@ public final class Dracula extends Angel {
         if(wizard.isAlive() == false) {
             return;
         }
-        wizard.addToAngelDamageModifiers(AngelConstants.DRACULA_WIZARD_MODIFIER);
+        wizard.addToAdditionalDamageModifiers(AngelConstants.DRACULA_WIZARD_MODIFIER);
         wizard.takeUnmonitoredDamage(AngelConstants.DRACULA_WIZARD_DMG);
     }
 }

@@ -13,7 +13,7 @@ public abstract class Hero {
     protected int xp;
     protected int level;
     protected TerrainType preferredTerrain;
-    protected float angelDamageModifiers;
+    protected float additionalDamageModifier;
 
     // over time damage management
     protected int roundsLeftOfDamageOverTime;
@@ -39,6 +39,7 @@ public abstract class Hero {
         this.overTimeDamage = 0;
         this.lastDamageTaken = 0;
         this.lastDamageTakenCounter = 0;
+        this.additionalDamageModifier = 0;
     }
 
     public final boolean isAlive() {
@@ -221,8 +222,8 @@ public abstract class Hero {
         this.overTimeDamage = damage;
     }
 
-    public void addToAngelDamageModifiers(float angelDamageModifiers) {
-        this.angelDamageModifiers += angelDamageModifiers;
+    public void addToAdditionalDamageModifiers(float angelDamageModifiers) {
+        this.additionalDamageModifier += angelDamageModifiers;
     }
 
     /**
@@ -255,4 +256,9 @@ public abstract class Hero {
     public abstract float getSecondAbilityRaceModifier(Pyromancer enemyHero);
     public abstract float getSecondAbilityRaceModifier(Rogue enemyHero);
     public abstract float getSecondAbilityRaceModifier(Wizard enemyHero);
+
+    /**
+     * Apply strategy using strategy pattern.
+     */
+    public abstract void applyStrategy();
 }

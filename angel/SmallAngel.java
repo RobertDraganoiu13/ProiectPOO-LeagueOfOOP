@@ -16,7 +16,7 @@ public final class SmallAngel extends Angel {
         if(knight.isAlive() == false) {
             return;
         }
-        knight.addToAngelDamageModifiers(AngelConstants.SMALL_ANGEL_KNIGHT_BONUS_HP);
+        knight.addToAdditionalDamageModifiers(AngelConstants.SMALL_ANGEL_KNIGHT_BONUS_HP);
         knight.addHp(AngelConstants.SMALL_ANGEL_KNIGHT_BONUS_HP);
     }
 
@@ -25,7 +25,7 @@ public final class SmallAngel extends Angel {
         if(pyromancer.isAlive() == false) {
             return;
         }
-        pyromancer.addToAngelDamageModifiers(AngelConstants.SMALL_ANGEL_PYROMANCER_MODIFIER);
+        pyromancer.addToAdditionalDamageModifiers(AngelConstants.SMALL_ANGEL_PYROMANCER_MODIFIER);
         pyromancer.addHp(AngelConstants.SMALL_ANGEL_PYROMANCER_BONUS_HP);
     }
 
@@ -34,7 +34,7 @@ public final class SmallAngel extends Angel {
         if(rogue.isAlive() == false) {
             return;
         }
-        rogue.addToAngelDamageModifiers(AngelConstants.SMALL_ANGEL_ROGUE_MODIFIER);
+        rogue.addToAdditionalDamageModifiers(AngelConstants.SMALL_ANGEL_ROGUE_MODIFIER);
         rogue.addHp(AngelConstants.SMALL_ANGEL_ROGUE_BONUS_HP);
     }
 
@@ -43,7 +43,7 @@ public final class SmallAngel extends Angel {
         if(wizard.isAlive() == false) {
             return;
         }
-        wizard.addToAngelDamageModifiers(AngelConstants.SMALL_ANGEL_WIZARD_MODIFIER);
+        wizard.addToAdditionalDamageModifiers(AngelConstants.SMALL_ANGEL_WIZARD_MODIFIER);
         wizard.addHp(AngelConstants.SMALL_ANGEL_WIZARD_BONUS_HP);
     }
 }

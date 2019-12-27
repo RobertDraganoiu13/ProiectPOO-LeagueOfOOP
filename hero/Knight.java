@@ -2,18 +2,11 @@ package hero;
 
 import map.TerrainType;
 import common.KnightConstants;
+import strategy.HighHealthStrategy;
+import strategy.LowHealthStrategy;
+import strategy.StrategyManager;
 
 public final class Knight extends Hero {
-    private float ability1_KnightModifier;
-    private float ability1_PyromancerModifier;
-    private float ability1_RogueModifier;
-    private float ability1_WizardModifier;
-
-    private float ability2_KnightModifier;
-    private float ability2_PyromancerModifier;
-    private float ability2_RogueModifier;
-    private float ability2_WizardModifier;
-
     public Knight(final int x, final int y) {
         super(x, y, KnightConstants.KNIGHT_BASE_HP,
                 KnightConstants.KNIGHT_BONUS_HP_PER_LEVEL, TerrainType.Land);
@@ -43,7 +36,7 @@ public final class Knight extends Hero {
 
         // calculate and deal total damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + angelDamageModifiers);
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -115,5 +108,27 @@ public final class Knight extends Hero {
     @Override
     public float getSecondAbilityRaceModifier(final Wizard enemyHero) {
         return KnightConstants.KNIGHT_ABILITY2_WIZARD_MODIFIER;
+    }
+
+    /**
+     * Apply strategy based on current hp, using strategy pattern.
+     */
+    @Override
+    public void applyStrategy() {
+        // only apply to non incapacitated targets
+        if(overTimeEffect != OverTimeEffects.None) {
+            return;
+        }
+
+        // select and apply strategy
+        StrategyManager strategyManager;
+        if(hp < maxHp / KnightConstants.KNIGHT_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY1_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        } else if(hp < maxHp / KnightConstants.KNIGHT_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY2_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else {
+            strategyManager = new StrategyManager(new HighHealthStrategy());
+        }
+        strategyManager.applyStrategy(this);
     }
 }

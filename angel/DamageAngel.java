@@ -16,7 +16,7 @@ public final class DamageAngel extends Angel {
         if(knight.isAlive() == false) {
             return;
         }
-        knight.addToAngelDamageModifiers(AngelConstants.DAMAGE_ANGEL_KNIGHT_MODIFIER);
+        knight.addToAdditionalDamageModifiers(AngelConstants.DAMAGE_ANGEL_KNIGHT_MODIFIER);
     }
 
     @Override
@@ -24,7 +24,7 @@ public final class DamageAngel extends Angel {
         if(pyromancer.isAlive() == false) {
             return;
         }
-        pyromancer.addToAngelDamageModifiers(AngelConstants.DAMAGE_ANGEL_PYROMANCER_MODIFIER);
+        pyromancer.addToAdditionalDamageModifiers(AngelConstants.DAMAGE_ANGEL_PYROMANCER_MODIFIER);
     }
 
     @Override
@@ -32,7 +32,7 @@ public final class DamageAngel extends Angel {
         if(rogue.isAlive() == false) {
             return;
         }
-        rogue.addToAngelDamageModifiers(AngelConstants.DAMAGE_ANGEL_ROGUE_MODIFIER);
+        rogue.addToAdditionalDamageModifiers(AngelConstants.DAMAGE_ANGEL_ROGUE_MODIFIER);
     }
 
     @Override
@@ -40,6 +40,6 @@ public final class DamageAngel extends Angel {
         if(wizard.isAlive() == false) {
             return;
         }
-        wizard.addToAngelDamageModifiers(AngelConstants.DAMAGE_ANGEL_WIZARD_MODIFIER);
+        wizard.addToAdditionalDamageModifiers(AngelConstants.DAMAGE_ANGEL_WIZARD_MODIFIER);
     }
 }

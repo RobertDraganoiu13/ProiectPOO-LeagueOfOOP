@@ -24,4 +24,11 @@ public final class KnightConstants {
     public static final float KNIGHT_ABILITY2_WIZARD_MODIFIER = 1.05f;
     public static final int   KNIGHT_ABILITY2_ROUNDS_INCAPACITATED = 1;
 
+    public static final int KNIGHT_SMALL_LIFE_DIVISOR = 3;
+    public static final int KNIGHT_BIG_LIFE_DIVISOR = 2;
+    public static final int KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP = 5;
+    public static final float KNIGHT_STRATEGY1_DAMAGE_MODIFIER = 0.5f;
+    public static final int KNIGHT_STRATEGY2_DIVISOR_FOR_WON_HP = 4;
+    public static final float KNIGHT_STRATEGY2_DAMAGE_MODIFIER = -0.2f;
+
 }

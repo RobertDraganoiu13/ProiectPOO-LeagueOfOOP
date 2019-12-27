@@ -16,7 +16,7 @@ public final class GoodBoy extends Angel {
         if(knight.isAlive() == false) {
             return;
         }
-        knight.addToAngelDamageModifiers(AngelConstants.GOOD_BOY_KNIGHT_MODIFIER);
+        knight.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_KNIGHT_MODIFIER);
         knight.addHp(AngelConstants.GOOD_BOY_KNIGHT_BONUS_HP);
     }
 
@@ -25,7 +25,7 @@ public final class GoodBoy extends Angel {
         if(pyromancer.isAlive() == false) {
             return;
         }
-        pyromancer.addToAngelDamageModifiers(AngelConstants.GOOD_BOY_PYROMANCER_MODIFIER);
+        pyromancer.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_PYROMANCER_MODIFIER);
         pyromancer.addHp(AngelConstants.GOOD_BOY_PYROMANCER_BONUS_HP);
     }
 
@@ -34,7 +34,7 @@ public final class GoodBoy extends Angel {
         if(rogue.isAlive() == false) {
             return;
         }
-        rogue.addToAngelDamageModifiers(AngelConstants.GOOD_BOY_ROGUE_MODIFIER);
+        rogue.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_ROGUE_MODIFIER);
         rogue.addHp(AngelConstants.GOOD_BOY_ROGUE_BONUS_HP);
     }
 
@@ -43,7 +43,7 @@ public final class GoodBoy extends Angel {
         if(wizard.isAlive() == false) {
             return;
         }
-        wizard.addToAngelDamageModifiers(AngelConstants.GOOD_BOY_WIZARD_MODIFIER);
+        wizard.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_WIZARD_MODIFIER);
         wizard.addHp(AngelConstants.GOOD_BOY_WIZARD_BONUS_HP);
     }
 }

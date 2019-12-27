@@ -2,21 +2,14 @@ package hero;
 
 import map.TerrainType;
 import common.WizardConstants;
+import strategy.HighHealthStrategy;
+import strategy.LowHealthStrategy;
+import strategy.StrategyManager;
 
 public final class Wizard extends Hero {
     public Wizard(final int x, final int y) {
         super(x, y, WizardConstants.WIZARD_BASE_HP,
                 WizardConstants.WIZARD_BONUS_HP_PER_LEVEL, TerrainType.Desert);
-    }
-
-    @Override
-    public float provideFirstAbilityRaceModifier(final Hero enemyHero) {
-        return enemyHero.getFirstAbilityRaceModifier(this);
-    }
-
-    @Override
-    public float provideSecondAbilityRaceModifier(final Hero enemyHero) {
-        return enemyHero.getSecondAbilityRaceModifier(this);
     }
 
     @Override
@@ -41,7 +34,6 @@ public final class Wizard extends Hero {
         enemyHero.takeDamage(damage, 1.0f);
     }
 
-    @SuppressWarnings("checkstyle:WhitespaceAfter")
     @Override
     public void useSecondAbility(final Hero enemyHero, final TerrainType terrain) {
         // deal 0 damage and return if enemy hero is a wizard
@@ -70,6 +62,16 @@ public final class Wizard extends Hero {
         int damage = Math.round(enemyHero.provideSecondAbilityRaceModifier(this)
                                     * totalPercent * damageTaken);
         enemyHero.takeDamage(damage, 1.0f);
+    }
+
+    @Override
+    public float provideFirstAbilityRaceModifier(final Hero enemyHero) {
+        return enemyHero.getFirstAbilityRaceModifier(this);
+    }
+
+    @Override
+    public float provideSecondAbilityRaceModifier(final Hero enemyHero) {
+        return enemyHero.getSecondAbilityRaceModifier(this);
     }
 
     @Override
@@ -110,5 +112,27 @@ public final class Wizard extends Hero {
     @Override
     public float getSecondAbilityRaceModifier(final Wizard enemyHero) {
         return 0.0f; // no effect on wizard
+    }
+
+    /**
+     * Apply strategy based on current hp, using strategy pattern.
+     */
+    @Override
+    public void applyStrategy() {
+        // only apply to non incapacitated targets
+        if(overTimeEffect != OverTimeEffects.None) {
+            return;
+        }
+
+        // select and apply strategy
+        StrategyManager strategyManager;
+        if(hp < maxHp / WizardConstants.WIZARD_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY1_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        } else if(hp < maxHp / WizardConstants.WIZARD_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY2_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else {
+            strategyManager = new StrategyManager(new HighHealthStrategy());
+        }
+        strategyManager.applyStrategy(this);
     }
 }

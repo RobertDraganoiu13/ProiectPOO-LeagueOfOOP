@@ -20,4 +20,11 @@ public final class WizardConstants {
     public static final float WIZARD_ABILITY2_KNIGHT_MODIFIER = 1.4f;
     public static final float WIZARD_ABILITY2_PYROMANCER_MODIFIER = 1.3f;
     public static final float WIZARD_ABILITY2_ROGUE_MODIFIER = 1.2f;
+
+    public static final int WIZARD_SMALL_LIFE_DIVISOR = 4;
+    public static final int WIZARD_BIG_LIFE_DIVISOR = 2;
+    public static final int WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP = 10;
+    public static final float WIZARD_STRATEGY1_DAMAGE_MODIFIER = 0.6f;
+    public static final int WIZARD_STRATEGY2_DIVISOR_FOR_WON_HP = 2;
+    public static final float WIZARD_STRATEGY2_DAMAGE_MODIFIER = -0.1f;
 }

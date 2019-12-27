@@ -2,6 +2,9 @@ package hero;
 
 import map.TerrainType;
 import common.RogueConstants;
+import strategy.HighHealthStrategy;
+import strategy.LowHealthStrategy;
+import strategy.StrategyManager;
 
 public final class Rogue extends Hero {
     private int backstabHits;
@@ -109,5 +112,27 @@ public final class Rogue extends Hero {
     @Override
     public float getSecondAbilityRaceModifier(final Wizard enemyHero) {
         return RogueConstants.ROGUE_ABILITY2_WIZARD_MODIFIER;
+    }
+
+    /**
+     * Apply strategy based on current hp, using strategy pattern.
+     */
+    @Override
+    public void applyStrategy() {
+        // only apply to non incapacitated targets
+        if(overTimeEffect != OverTimeEffects.None) {
+            return;
+        }
+
+        // select and apply strategy
+        StrategyManager strategyManager;
+        if(hp < maxHp / RogueConstants.ROGUE_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(RogueConstants.ROGUE_STRATEGY1_DAMAGE_MODIFIER,RogueConstants.ROGUE_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        } else if(hp < maxHp / RogueConstants.ROGUE_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(RogueConstants.ROGUE_STRATEGY2_DAMAGE_MODIFIER, RogueConstants.ROGUE_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else {
+            strategyManager = new StrategyManager(new HighHealthStrategy());
+        }
+        strategyManager.applyStrategy(this);
     }
 }

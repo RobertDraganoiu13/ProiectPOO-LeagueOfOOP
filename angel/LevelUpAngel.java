@@ -17,7 +17,7 @@ public final class LevelUpAngel extends Angel {
             return;
         }
         knight.levelUp();
-        knight.addToAngelDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_KNIGHT_MODIFIER);
+        knight.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_KNIGHT_MODIFIER);
     }
 
     @Override
@@ -26,7 +26,7 @@ public final class LevelUpAngel extends Angel {
             return;
         }
         pyromancer.levelUp();
-        pyromancer.addToAngelDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_PYROMANCER_MODIFIER);
+        pyromancer.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_PYROMANCER_MODIFIER);
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class LevelUpAngel extends Angel {
             return;
         }
         rogue.levelUp();
-        rogue.addToAngelDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_ROGUE_MODIFIER);
+        rogue.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_ROGUE_MODIFIER);
     }
 
     @Override
@@ -44,6 +44,6 @@ public final class LevelUpAngel extends Angel {
             return;
         }
         wizard.levelUp();
-        wizard.addToAngelDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_WIZARD_MODIFIER);
+        wizard.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_WIZARD_MODIFIER);
     }
 }

@@ -22,4 +22,11 @@ public final class RogueConstants {
     public static final float ROGUE_ABILITY2_PYROMANCER_MODIFIER = 1.2f;
     public static final float ROGUE_ABILITY2_ROGUE_MODIFIER = 0.9f;
     public static final float ROGUE_ABILITY2_WIZARD_MODIFIER = 1.25f;
+
+    public static final int ROGUE_SMALL_LIFE_DIVISOR = 7;
+    public static final int ROGUE_BIG_LIFE_DIVISOR = 5;
+    public static final int ROGUE_STRATEGY1_DIVISOR_FOR_LOST_HP = 7;
+    public static final float ROGUE_STRATEGY1_DAMAGE_MODIFIER = 0.4f;
+    public static final int ROGUE_STRATEGY2_DIVISOR_FOR_WON_HP = 2;
+    public static final float ROGUE_STRATEGY2_DAMAGE_MODIFIER = -0.1f;
 }

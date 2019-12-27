@@ -37,6 +37,8 @@ public class Game {
      */
     public final void start() throws IOException {
         for (int i = 0; i < rounds; ++i) {
+            // apply strategy if not incapacitated
+            // TODO:
             // move heroes if not incapacitated
             moveHeroes(movements.get(i));
             // apply over time effects

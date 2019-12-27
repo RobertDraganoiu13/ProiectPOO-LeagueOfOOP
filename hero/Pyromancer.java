@@ -2,6 +2,9 @@ package hero;
 
 import map.TerrainType;
 import common.PyromancerConstants;
+import strategy.HighHealthStrategy;
+import strategy.LowHealthStrategy;
+import strategy.StrategyManager;
 
 public final class Pyromancer extends Hero {
     public Pyromancer(final int x, final int y) {
@@ -102,5 +105,27 @@ public final class Pyromancer extends Hero {
     @Override
     public float getSecondAbilityRaceModifier(final Wizard enemyHero) {
         return PyromancerConstants.PYROMANCER_ABILITY2_WIZARD_MODIFIER;
+    }
+
+    /**
+     * Apply strategy based on current hp, using strategy pattern.
+     */
+    @Override
+    public void applyStrategy() {
+        // only apply to non incapacitated targets
+        if(overTimeEffect != OverTimeEffects.None) {
+            return;
+        }
+
+        // select and apply strategy
+        StrategyManager strategyManager;
+        if(hp < maxHp / PyromancerConstants.PYROMANCER_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(PyromancerConstants.PYROMANCER_STRATEGY1_DAMAGE_MODIFIER, PyromancerConstants.PYROMANCER_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        } else if(hp < maxHp / PyromancerConstants.PYROMANCER_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new LowHealthStrategy(PyromancerConstants.PYROMANCER_STRATEGY2_DAMAGE_MODIFIER, PyromancerConstants.PYROMANCER_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else {
+            strategyManager = new StrategyManager(new HighHealthStrategy());
+        }
+        strategyManager.applyStrategy(this);
     }
 }
