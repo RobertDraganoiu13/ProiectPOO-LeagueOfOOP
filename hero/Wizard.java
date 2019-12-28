@@ -8,8 +8,8 @@ import strategy.LowHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Wizard extends Hero {
-    public Wizard(final int x, final int y) {
-        super(x, y, WizardConstants.WIZARD_BASE_HP,
+    public Wizard(final int id, final int x, final int y) {
+        super(id, x, y, WizardConstants.WIZARD_BASE_HP,
                 WizardConstants.WIZARD_BONUS_HP_PER_LEVEL, TerrainType.Desert);
     }
 
@@ -144,7 +144,7 @@ public final class Wizard extends Hero {
     }
 
     @Override
-    public void acceptAngel(Angel angel) {
-        angel.affect(this);
+    public boolean acceptAngel(Angel angel) {
+        return angel.affect(this);
     }
 }

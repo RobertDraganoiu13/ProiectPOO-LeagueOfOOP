@@ -8,8 +8,8 @@ import strategy.LowHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Pyromancer extends Hero {
-    public Pyromancer(final int x, final int y) {
-        super(x, y, PyromancerConstants.PYROMANCER_BASE_HP,
+    public Pyromancer(final int id, final int x, final int y) {
+        super(id, x, y, PyromancerConstants.PYROMANCER_BASE_HP,
                 PyromancerConstants.PYROMANCER_BONUS_HP_PER_LEVEL, TerrainType.Volcanic);
     }
 
@@ -131,7 +131,7 @@ public final class Pyromancer extends Hero {
     }
 
     @Override
-    public void acceptAngel(Angel angel) {
-        angel.affect(this);
+    public boolean acceptAngel(Angel angel) {
+        return angel.affect(this);
     }
 }

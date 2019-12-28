@@ -1,6 +1,7 @@
 package main;
 
 import angel.Angel;
+import angel.AngelType;
 import hero.Hero;
 import hero.Knight;
 import hero.Pyromancer;
@@ -20,6 +21,7 @@ public class Game {
     private ArrayList<String> movements;
     private GameMap gameMap;
     private FileWriter fileWriter;
+    private GreatMagician greatMagician;
 
     public Game(final int rounds, final ArrayList<Hero> heroes, final ArrayList<String> movements,
                 final GameMap gameMap, final ArrayList<ArrayList<Angel>> angels, final String outputPath) throws IOException {
@@ -29,6 +31,7 @@ public class Game {
         this.movements = movements;
         this.gameMap = gameMap;
         this.fileWriter = new FileWriter(outputPath);
+        greatMagician = GreatMagician.getInstance(fileWriter);
     }
 
     /**
@@ -37,18 +40,34 @@ public class Game {
      */
     public final void start() throws IOException {
         for (int i = 0; i < rounds; ++i) {
+            // notify start round
+            greatMagician.notifyStartRound(i + 1);
+            // apply over time effects
+            applyAllOverTimeEffects();
             // apply strategy if not incapacitated
             applyStrategies();
             // move heroes if not incapacitated
             moveHeroes(movements.get(i));
-            // apply over time effects
-            applyAllOverTimeEffects();
+            // remove over time effects if rounds passed
+            checkOverTimeEffects();
             // battle
             sustainAllBattles();
-            // spawn angels and apply effects
+            // spawn angels and apply angel effects
             applyAngelEffects(angels.get(i));
+            // notify end round
+            greatMagician.notifyEndRound();
+            greatMagician.writeLog();
         }
-        printPlayerStats();
+        printHeroStats();
+    }
+
+    private final void applyAllOverTimeEffects() {
+        for (var hero : heroes) {
+            if(!hero.isAlive()) {
+                continue;
+            }
+            hero.applyOverTimeEffects();
+        }
     }
 
     private void applyStrategies() {
@@ -82,12 +101,9 @@ public class Game {
         }
     }
 
-    public final void applyAllOverTimeEffects() {
-        for (var hero : heroes) {
-            if(!hero.isAlive()) {
-                continue;
-            }
-            hero.applyOverTimeEffects();
+    private void checkOverTimeEffects() {
+        for(var hero : heroes) {
+            hero.checkOverTimeEffects();
         }
     }
 
@@ -119,16 +135,25 @@ public class Game {
         int levelCombatant1 = combatant1.getLevel();
         int levelCombatant2 = combatant2.getLevel();
 
+        // no xp if both dead
+        if(!combatant1.isAlive() && !combatant2.isAlive()) {
+            greatMagician.notifyKill(combatant1, combatant2);
+            greatMagician.notifyKill(combatant2, combatant1);
+            return;
+        }
+
         if (!combatant2.isAlive()) {
+            greatMagician.notifyKill(combatant1, combatant2);
             combatant1.addXp(levelCombatant2);
         }
 
         if (!combatant1.isAlive()) {
+            greatMagician.notifyKill(combatant2, combatant1);
             combatant2.addXp(levelCombatant1);
         }
     }
 
-    private void sustainAllBattles() {
+    private void sustainAllBattles() throws IOException {
         // make battled array, only battle if boolean from hero index is false
         ArrayList<Boolean> battled = new ArrayList<>();
         for (int i = 0; i < heroes.size(); ++i) {
@@ -154,15 +179,38 @@ public class Game {
 
     private void applyAngelEffects(ArrayList<Angel> angels) {
         for(var angel : angels) {
+            greatMagician.notifyAngelSpawn(angel);
             for(var hero : heroes) {
+                boolean oldStatus = hero.isAlive();
                 if(hero.hasSameCoordsAs(angel)) {
-                    hero.acceptAngel(angel);
+                    boolean accepted = hero.acceptAngel(angel);
+
+                    // notify gm if angel had effect on hero based on angel type
+                    if(accepted) {
+                        if(angel.getType() == AngelType.Good) {
+                            greatMagician.notifyAngelHelp(angel, hero);
+                        } else {
+                            greatMagician.notifyAngelHit(angel, hero);
+                        }
+                    }
+
+                    // notify gm if angel killed or revived hero
+                    boolean newStatus = hero.isAlive();
+                    if(oldStatus != newStatus) {
+                        if(newStatus == false) {
+                            greatMagician.notifyKill(hero);
+                        } else {
+                            greatMagician.notifyRevive(hero);
+                        }
+                    }
                 }
             }
         }
     }
 
-    private void printPlayerStats() throws IOException {
+    private void printHeroStats() throws IOException {
+        fileWriter.writeWord("~~ Results ~~");
+        fileWriter.writeNewLine();
         for (var hero: heroes) {
             char type;
             if (hero instanceof Knight) {

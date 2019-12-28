@@ -7,43 +7,47 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class LevelUpAngel extends Angel {
-    public LevelUpAngel(String name, int x, int y) {
-        super(name, x, y);
+    public LevelUpAngel(int x, int y) {
+        super(AngelType.Good, x, y);
     }
 
     @Override
-    public void affect(final Knight knight) {
-        if(knight.isAlive() == false) {
-            return;
+    public boolean affect(final Knight knight) {
+        if(!knight.isAlive()) {
+            return false;
         }
         knight.levelUp();
         knight.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_KNIGHT_MODIFIER);
+        return true;
     }
 
     @Override
-    public void affect(final Pyromancer pyromancer) {
-        if(pyromancer.isAlive() == false) {
-            return;
+    public boolean affect(final Pyromancer pyromancer) {
+        if(!pyromancer.isAlive()) {
+            return false;
         }
         pyromancer.levelUp();
         pyromancer.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_PYROMANCER_MODIFIER);
+        return true;
     }
 
     @Override
-    public void affect(final Rogue rogue) {
-        if(rogue.isAlive() == false) {
-            return;
+    public boolean affect(final Rogue rogue) {
+        if(!rogue.isAlive()) {
+            return false;
         }
         rogue.levelUp();
         rogue.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_ROGUE_MODIFIER);
+        return true;
     }
 
     @Override
-    public void affect(final Wizard wizard) {
-        if(wizard.isAlive() == false) {
-            return;
+    public boolean affect(final Wizard wizard) {
+        if(!wizard.isAlive()) {
+            return false;
         }
         wizard.levelUp();
         wizard.addToAdditionalDamageModifiers(AngelConstants.LEVEL_UP_ANGEL_WIZARD_MODIFIER);
+        return true;
     }
 }

@@ -19,27 +19,27 @@ public final class AngelFactory {
     private Angel createAngel(AngelInputData data) {
         switch (data.getType()) {
             case "DamageAngel":
-                return new DamageAngel(data.getType(), data.getX(), data.getY());
+                return new DamageAngel(data.getX(), data.getY());
             case "DarkAngel":
-                return new DarkAngel(data.getType(), data.getX(), data.getY());
+                return new DarkAngel(data.getX(), data.getY());
             case "Dracula":
-                return new Dracula(data.getType(), data.getX(), data.getY());
+                return new Dracula(data.getX(), data.getY());
             case "GoodBoy":
-                return new GoodBoy(data.getType(), data.getX(), data.getY());
+                return new GoodBoy(data.getX(), data.getY());
             case "LevelUpAngel":
-                return new LevelUpAngel(data.getType(), data.getX(), data.getY());
+                return new LevelUpAngel(data.getX(), data.getY());
             case "LifeGiver":
-                return new LifeGiver(data.getType(), data.getX(), data.getY());
+                return new LifeGiver(data.getX(), data.getY());
             case "SmallAngel":
-                return new SmallAngel(data.getType(), data.getX(), data.getY());
+                return new SmallAngel(data.getX(), data.getY());
             case "Spawner":
-                return new Spawner(data.getType(), data.getX(), data.getY());
+                return new Spawner(data.getX(), data.getY());
             case "TheDoomer":
-                return new TheDoomer(data.getType(), data.getX(), data.getY());
+                return new TheDoomer(data.getX(), data.getY());
             default:
                 break;
         }
-        return new XPAngel(data.getType(), data.getX(), data.getY());
+        return new XPAngel(data.getX(), data.getY());
     }
 
     /**

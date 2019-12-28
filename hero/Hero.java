@@ -1,10 +1,12 @@
 package hero;
 
 import angel.Angel;
+import main.GreatMagician;
 import map.TerrainType;
 import common.Constants;
 
 public abstract class Hero {
+    protected int id;
     protected boolean isAlive;
     protected int x;
     protected int y;
@@ -24,8 +26,9 @@ public abstract class Hero {
     protected int lastDamageTaken;
     protected int lastDamageTakenCounter;
 
-    public Hero(final int x, final int y, final int hp,
+    public Hero(final int id, final int x, final int y, final int hp,
                 final int bonusHpPerLevel, final TerrainType preferredTerrain) {
+        this.id = id;
         this.isAlive = true;
         this.x = x;
         this.y = y;
@@ -41,6 +44,10 @@ public abstract class Hero {
         this.lastDamageTaken = 0;
         this.lastDamageTakenCounter = 0;
         this.additionalDamageModifier = 0;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public final boolean isAlive() {
@@ -90,7 +97,9 @@ public abstract class Hero {
 
         takeUnmonitoredDamage(this.overTimeDamage);
         roundsLeftOfOverTimeEffect--;
+    }
 
+    public void checkOverTimeEffects() {
         // remove over time effect if rounds passed
         if (overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
             overTimeEffect = OverTimeEffects.None;
@@ -200,6 +209,11 @@ public abstract class Hero {
         while (this.xp >= Constants.LEVEL_UP_CONSTANT1
                 + this.level * Constants.LEVEL_UP_CONSTANT2) {
             this.level++;
+
+            // notify great magician
+            var greatMagician = GreatMagician.getInstance();
+            greatMagician.notifyLevelUp(this);
+
             this.maxHp += this.bonusHpPerLevel;
             this.hp = this.maxHp;
         }
@@ -211,6 +225,11 @@ public abstract class Hero {
 
     public final void levelUp() {
         this.level++;
+
+        // notify great magician
+        var greatMagician = GreatMagician.getInstance();
+        greatMagician.notifyLevelUp(this);
+
         this.xp = Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2;
         this.maxHp += this.bonusHpPerLevel;
         this.hp = this.maxHp;
@@ -279,6 +298,6 @@ public abstract class Hero {
      * Accept angel using visitor pattern.
      * @param angel
      */
-    public abstract void acceptAngel(Angel angel);
+    public abstract boolean acceptAngel(Angel angel);
 
 }

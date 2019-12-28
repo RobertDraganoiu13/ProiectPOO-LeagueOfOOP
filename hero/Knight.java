@@ -8,8 +8,8 @@ import strategy.LowHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Knight extends Hero {
-    public Knight(final int x, final int y) {
-        super(x, y, KnightConstants.KNIGHT_BASE_HP,
+    public Knight(final int id, final int x, final int y) {
+        super(id, x, y, KnightConstants.KNIGHT_BASE_HP,
                 KnightConstants.KNIGHT_BONUS_HP_PER_LEVEL, TerrainType.Land);
     }
 
@@ -143,7 +143,7 @@ public final class Knight extends Hero {
     }
 
     @Override
-    public void acceptAngel(Angel angel) {
-        angel.affect(this);
+    public boolean acceptAngel(Angel angel) {
+        return angel.affect(this);
     }
 }

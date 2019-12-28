@@ -10,8 +10,8 @@ import strategy.StrategyManager;
 public final class Rogue extends Hero {
     private int backstabHits;
 
-    public Rogue(final int x, final int y) {
-        super(x, y, RogueConstants.ROGUE_BASE_HP,
+    public Rogue(final int id, final int x, final int y) {
+        super(id, x, y, RogueConstants.ROGUE_BASE_HP,
                 RogueConstants.ROGUE_BONUS_HP_PER_LEVEL, TerrainType.Woods);
         this.backstabHits = 0;
     }
@@ -138,7 +138,7 @@ public final class Rogue extends Hero {
     }
 
     @Override
-    public void acceptAngel(Angel angel) {
-        angel.affect(this);
+    public boolean acceptAngel(Angel angel) {
+        return angel.affect(this);
     }
 }

@@ -7,43 +7,47 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class GoodBoy extends Angel {
-    public GoodBoy(String name, int x, int y) {
-        super(name, x, y);
+    public GoodBoy(int x, int y) {
+        super(AngelType.Good, x, y);
     }
 
     @Override
-    public void affect(final Knight knight) {
+    public boolean affect(final Knight knight) {
         if(knight.isAlive() == false) {
-            return;
+            return false;
         }
         knight.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_KNIGHT_MODIFIER);
         knight.addHp(AngelConstants.GOOD_BOY_KNIGHT_BONUS_HP);
+        return true;
     }
 
     @Override
-    public void affect(final Pyromancer pyromancer) {
+    public boolean affect(final Pyromancer pyromancer) {
         if(pyromancer.isAlive() == false) {
-            return;
+            return false;
         }
         pyromancer.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_PYROMANCER_MODIFIER);
         pyromancer.addHp(AngelConstants.GOOD_BOY_PYROMANCER_BONUS_HP);
+        return true;
     }
 
     @Override
-    public void affect(final Rogue rogue) {
+    public boolean affect(final Rogue rogue) {
         if(rogue.isAlive() == false) {
-            return;
+            return false;
         }
         rogue.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_ROGUE_MODIFIER);
         rogue.addHp(AngelConstants.GOOD_BOY_ROGUE_BONUS_HP);
+        return true;
     }
 
     @Override
-    public void affect(final Wizard wizard) {
+    public boolean affect(final Wizard wizard) {
         if(wizard.isAlive() == false) {
-            return;
+            return false;
         }
         wizard.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_WIZARD_MODIFIER);
         wizard.addHp(AngelConstants.GOOD_BOY_WIZARD_BONUS_HP);
+        return true;
     }
 }

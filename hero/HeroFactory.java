@@ -25,18 +25,18 @@ public final class HeroFactory {
      * @param data
      * @return
      */
-    private Hero createHero(final HeroInputData data) {
+    private Hero createHero(final HeroInputData data, int id) {
         switch (data.getType()) {
             case 'K':
-                return new Knight(data.getX(), data.getY());
+                return new Knight(id, data.getX(), data.getY());
             case 'P':
-                return new Pyromancer(data.getX(), data.getY());
+                return new Pyromancer(id, data.getX(), data.getY());
             case 'R':
-                return new Rogue(data.getX(), data.getY());
+                return new Rogue(id, data.getX(), data.getY());
             default:
                 break;
         }
-        return new Wizard(data.getX(), data.getY());
+        return new Wizard(id, data.getX(), data.getY());
     }
 
     /**
@@ -47,8 +47,8 @@ public final class HeroFactory {
     public ArrayList<Hero> createAllHeroes(final ArrayList<HeroInputData> heroesData) {
         ArrayList<Hero> heroes = new ArrayList<Hero>();
         // create players using heroesData
-        for (var data : heroesData) {
-            heroes.add(createHero(data));
+        for (int i = 0; i < heroesData.size(); ++i) {
+            heroes.add(createHero(heroesData.get(i), i));
         }
         return heroes;
     }

@@ -6,19 +6,17 @@ import hero.Rogue;
 import hero.Wizard;
 
 public abstract class Angel {
-    private String name;
+    private AngelType type;
     private int x;
     private int y;
 
-    public Angel(String name, int x, int y) {
-        this.name = name;
+    public Angel(AngelType type, int x, int y) {
+        this.type = type;
         this.x = x;
         this.y = y;
     }
 
-    public String getName() {
-        return name;
-    }
+    public AngelType getType() { return type; }
 
     public int getX() {
         return x;
@@ -28,8 +26,8 @@ public abstract class Angel {
         return y;
     }
 
-    public abstract void affect(Knight knight);
-    public abstract void affect(Pyromancer pyromancer);
-    public abstract void affect(Rogue rogue);
-    public abstract void affect(Wizard wizard);
+    public abstract boolean affect(Knight knight);
+    public abstract boolean affect(Pyromancer pyromancer);
+    public abstract boolean affect(Rogue rogue);
+    public abstract boolean affect(Wizard wizard);
 }
