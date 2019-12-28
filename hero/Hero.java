@@ -1,5 +1,6 @@
 package hero;
 
+import angel.Angel;
 import map.TerrainType;
 import common.Constants;
 
@@ -61,6 +62,18 @@ public abstract class Hero {
      */
     public final boolean hasSameCoordsAs(final Hero enemyHero) {
         if (this.x == enemyHero.getX() && this.y == enemyHero.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks collision on map with an angel.
+     * @param angel
+     * @return
+     */
+    public final boolean hasSameCoordsAs(final Angel angel) {
+        if (this.x == angel.getX() && this.y == angel.getY()) {
             return true;
         }
         return false;
@@ -261,4 +274,11 @@ public abstract class Hero {
      * Apply strategy using strategy pattern.
      */
     public abstract void applyStrategy();
+
+    /**
+     * Accept angel using visitor pattern.
+     * @param angel
+     */
+    public abstract void acceptAngel(Angel angel);
+
 }

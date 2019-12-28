@@ -1,5 +1,6 @@
 package hero;
 
+import angel.Angel;
 import map.TerrainType;
 import common.RogueConstants;
 import strategy.HighHealthStrategy;
@@ -36,7 +37,7 @@ public final class Rogue extends Hero {
 
         // calculate and deal total damage
         int totalDamage = Math.round(abilityDamage * (terrainDamageModifier * critDamageModifier));
-        enemyHero.takeDamage(totalDamage, enemyHero.provideFirstAbilityRaceModifier(this));
+        enemyHero.takeDamage(totalDamage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -55,13 +56,13 @@ public final class Rogue extends Hero {
 
         // apply modifiers
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this));
+        int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
 
         // apply over time effect and deal damage
         enemyHero.addOverTimeEffect(OverTimeEffects.Incapacitated,
                 RogueConstants.ROGUE_ABILITY2_ROUNDS_INCAPACITATED
                         * roundsIncapacitatedModifier, overTimeDamage);
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -134,5 +135,10 @@ public final class Rogue extends Hero {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
         strategyManager.applyStrategy(this);
+    }
+
+    @Override
+    public void acceptAngel(Angel angel) {
+        angel.affect(this);
     }
 }

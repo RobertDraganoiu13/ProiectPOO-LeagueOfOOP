@@ -38,19 +38,26 @@ public class Game {
     public final void start() throws IOException {
         for (int i = 0; i < rounds; ++i) {
             // apply strategy if not incapacitated
-            // TODO:
+            applyStrategies();
             // move heroes if not incapacitated
             moveHeroes(movements.get(i));
             // apply over time effects
             applyAllOverTimeEffects();
             // battle
             sustainAllBattles();
-            // spawn angels
-            // TODO:
-            // apply angel effects
-            // TODO:
+            // spawn angels and apply effects
+            applyAngelEffects(angels.get(i));
         }
         printPlayerStats();
+    }
+
+    private void applyStrategies() {
+        for (var hero : heroes) {
+            if(!hero.isAlive()) {
+                continue;
+            }
+            hero.applyStrategy();
+        }
     }
 
     private void moveHeroes(final String moves) {
@@ -77,6 +84,9 @@ public class Game {
 
     public final void applyAllOverTimeEffects() {
         for (var hero : heroes) {
+            if(!hero.isAlive()) {
+                continue;
+            }
             hero.applyOverTimeEffects();
         }
     }
@@ -137,6 +147,16 @@ public class Game {
                     battled.set(i, true);
                     battled.set(i, true);
                     battle(heroes.get(i), heroes.get(j));
+                }
+            }
+        }
+    }
+
+    private void applyAngelEffects(ArrayList<Angel> angels) {
+        for(var angel : angels) {
+            for(var hero : heroes) {
+                if(hero.hasSameCoordsAs(angel)) {
+                    hero.acceptAngel(angel);
                 }
             }
         }

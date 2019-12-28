@@ -1,5 +1,6 @@
 package hero;
 
+import angel.Angel;
 import map.TerrainType;
 import common.KnightConstants;
 import strategy.HighHealthStrategy;
@@ -22,6 +23,7 @@ public final class Knight extends Hero {
                                     * KnightConstants.KNIGHT_ABILITY1_EXECUTE_PERCENTAGE_BONUS);
         if (enemyHero.getHp() < enemyHero.getMaxHp() * executeHealthPercentage) {
             enemyHero.takeDamage(enemyHero.getHp(), 0);
+            return;
         }
 
         // base damage + level adds
@@ -34,9 +36,17 @@ public final class Knight extends Hero {
             terrainDamageModifier = KnightConstants.KNIGHT_BONUS_TERRAIN_PERCENTAGE_MODIFIER;
         }
 
-        // calculate and deal total damage
+        // calculate damage with terrain modifier
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
+
+        // calculate additional damage modifier
+        float bonusModifier = 0f;
+        if(enemyHero.provideFirstAbilityRaceModifier(this) != 1.0f) {
+            bonusModifier = additionalDamageModifier;
+        }
+
+        // deal damage
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier);
     }
 
     @Override
@@ -57,7 +67,7 @@ public final class Knight extends Hero {
 
         // calculate and deal damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -130,5 +140,10 @@ public final class Knight extends Hero {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
         strategyManager.applyStrategy(this);
+    }
+
+    @Override
+    public void acceptAngel(Angel angel) {
+        angel.affect(this);
     }
 }

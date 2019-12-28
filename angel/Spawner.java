@@ -7,8 +7,8 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class Spawner extends Angel {
-    public Spawner(int x, int y) {
-        super(x, y);
+    public Spawner(String name, int x, int y) {
+        super(name, x, y);
     }
 
     @Override

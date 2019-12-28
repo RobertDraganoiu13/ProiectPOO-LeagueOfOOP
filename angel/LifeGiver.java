@@ -7,8 +7,8 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class LifeGiver extends Angel {
-    public LifeGiver(int x, int y) {
-        super(x, y);
+    public LifeGiver(String name, int x, int y) {
+        super(name, x, y);
     }
 
     @Override

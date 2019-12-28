@@ -6,8 +6,8 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class TheDoomer extends Angel {
-    public TheDoomer(int x, int y) {
-        super(x, y);
+    public TheDoomer(String name, int x, int y) {
+        super(name, x, y);
     }
 
     @Override

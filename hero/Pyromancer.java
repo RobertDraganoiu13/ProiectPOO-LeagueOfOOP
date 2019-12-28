@@ -1,5 +1,6 @@
 package hero;
 
+import angel.Angel;
 import map.TerrainType;
 import common.PyromancerConstants;
 import strategy.HighHealthStrategy;
@@ -27,7 +28,7 @@ public final class Pyromancer extends Hero {
 
         // calculate and deal damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -49,12 +50,12 @@ public final class Pyromancer extends Hero {
         // apply modifier
         int damage = Math.round(abilityDamage * terrainDamageModifier);
         int overTimeDamage = Math.round(Math.round(abilityOverTimeDamage * terrainDamageModifier)
-                                * enemyHero.provideSecondAbilityRaceModifier(this));
+                                * enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
 
         // apply over time effect and deal damage
         enemyHero.addOverTimeEffect(OverTimeEffects.Damaged,
                 PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this));
+        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -127,5 +128,10 @@ public final class Pyromancer extends Hero {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
         strategyManager.applyStrategy(this);
+    }
+
+    @Override
+    public void acceptAngel(Angel angel) {
+        angel.affect(this);
     }
 }

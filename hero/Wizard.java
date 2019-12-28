@@ -1,5 +1,6 @@
 package hero;
 
+import angel.Angel;
 import map.TerrainType;
 import common.WizardConstants;
 import strategy.HighHealthStrategy;
@@ -26,7 +27,7 @@ public final class Wizard extends Hero {
 
         // apply modifiers on percentage
         float totalPercent = abilityDamagePercentage * terrainDamageModifier;
-        int damage = Math.round(enemyHero.provideFirstAbilityRaceModifier(this)
+        int damage = Math.round((enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier)
                 * totalPercent * Math.min(WizardConstants.WIZARD_ABILITY1_MIN_DAMAGE_PERCENTAGE
                 * enemyHero.getMaxHp(), enemyHero.getHp()));
 
@@ -57,9 +58,15 @@ public final class Wizard extends Hero {
         // apply modifier on percentage
         float totalPercent = baseDamagePercentage * terrainDamageModifier;
 
+        // use additional modifier only if not against wizard
+        float bonusModifier = 0.0f;
+        if(enemyHero.provideFirstAbilityRaceModifier(this) != 0.0f) {
+            bonusModifier = additionalDamageModifier;
+        }
+
         // calculate and deal total damage
         int damageTaken = this.getLastDamageTaken();
-        int damage = Math.round(enemyHero.provideSecondAbilityRaceModifier(this)
+        int damage = Math.round((enemyHero.provideSecondAbilityRaceModifier(this) + bonusModifier)
                                     * totalPercent * damageTaken);
         enemyHero.takeDamage(damage, 1.0f);
     }
@@ -134,5 +141,10 @@ public final class Wizard extends Hero {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
         strategyManager.applyStrategy(this);
+    }
+
+    @Override
+    public void acceptAngel(Angel angel) {
+        angel.affect(this);
     }
 }

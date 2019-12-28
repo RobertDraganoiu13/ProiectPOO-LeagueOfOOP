@@ -7,8 +7,8 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class XPAngel extends Angel {
-    public XPAngel(int x, int y) {
-        super(x, y);
+    public XPAngel(String name, int x, int y) {
+        super(name, x, y);
     }
 
     @Override

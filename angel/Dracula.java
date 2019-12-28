@@ -7,8 +7,8 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class Dracula extends Angel {
-    public Dracula(int x, int y) {
-        super(x, y);
+    public Dracula(String name, int x, int y) {
+        super(name, x, y);
     }
 
     @Override
