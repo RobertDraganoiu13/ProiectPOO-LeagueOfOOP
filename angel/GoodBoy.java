@@ -7,13 +7,13 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class GoodBoy extends Angel {
-    public GoodBoy(int x, int y) {
+    public GoodBoy(final int x, final int y) {
         super(AngelType.Good, x, y);
     }
 
     @Override
     public boolean affect(final Knight knight) {
-        if(knight.isAlive() == false) {
+        if (!knight.isAlive()) {
             return false;
         }
         knight.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_KNIGHT_MODIFIER);
@@ -23,7 +23,7 @@ public final class GoodBoy extends Angel {
 
     @Override
     public boolean affect(final Pyromancer pyromancer) {
-        if(pyromancer.isAlive() == false) {
+        if (!pyromancer.isAlive()) {
             return false;
         }
         pyromancer.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_PYROMANCER_MODIFIER);
@@ -33,7 +33,7 @@ public final class GoodBoy extends Angel {
 
     @Override
     public boolean affect(final Rogue rogue) {
-        if(rogue.isAlive() == false) {
+        if (!rogue.isAlive()) {
             return false;
         }
         rogue.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_ROGUE_MODIFIER);
@@ -43,7 +43,7 @@ public final class GoodBoy extends Angel {
 
     @Override
     public boolean affect(final Wizard wizard) {
-        if(wizard.isAlive() == false) {
+        if (!wizard.isAlive()) {
             return false;
         }
         wizard.addToAdditionalDamageModifiers(AngelConstants.GOOD_BOY_WIZARD_MODIFIER);

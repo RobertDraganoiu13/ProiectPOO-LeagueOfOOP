@@ -10,13 +10,13 @@ public final class AngelFactory {
     private AngelFactory() { }
 
     public static AngelFactory getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new AngelFactory();
         }
         return instance;
     }
 
-    private Angel createAngel(AngelInputData data) {
+    private Angel createAngel(final AngelInputData data) {
         switch (data.getType()) {
             case "DamageAngel":
                 return new DamageAngel(data.getX(), data.getY());
@@ -45,11 +45,12 @@ public final class AngelFactory {
     /**
      * Returns list of Angel objects created based on input data.
      */
-    public ArrayList<ArrayList<Angel>> createAllAngels(final ArrayList<ArrayList<AngelInputData>> angeldataArray) {
+    public ArrayList<ArrayList<Angel>>
+    createAllAngels(final ArrayList<ArrayList<AngelInputData>> angeldataArray) {
         ArrayList<ArrayList<Angel>> angels = new ArrayList<ArrayList<Angel>>();
-        for(int i = 0; i < angeldataArray.size(); ++i) {
+        for (int i = 0; i < angeldataArray.size(); ++i) {
             angels.add(new ArrayList<Angel>());
-            for(var data : angeldataArray.get(i)) {
+            for (var data : angeldataArray.get(i)) {
                 angels.get(i).add(createAngel(data));
             }
         }

@@ -1,7 +1,5 @@
 package input;
 
-import java.util.ArrayList;
-
 public final class AngelInputData {
     private String type;
     private int x;
@@ -19,7 +17,7 @@ public final class AngelInputData {
         return y;
     }
 
-    public AngelInputData(String allData) {
+    public AngelInputData(final String allData) {
         // parse data and initialize variables
         String[] parsed = allData.split(",");
         int i = 0;

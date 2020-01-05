@@ -5,11 +5,11 @@ import hero.Hero;
 public class StrategyManager {
     private Strategy strategy;
 
-    public StrategyManager(Strategy strategy) {
+    public StrategyManager(final Strategy strategy) {
         this.strategy = strategy;
     }
 
-    public void applyStrategy(Hero hero) {
+    public final void applyStrategy(final Hero hero) {
         strategy.apply(hero);
     }
 }

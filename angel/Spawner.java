@@ -7,13 +7,13 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class Spawner extends Angel {
-    public Spawner(int x, int y) {
+    public Spawner(final int x, final int y) {
         super(AngelType.Good, x, y);
     }
 
     @Override
     public boolean affect(final Knight knight) {
-        if(knight.isAlive()) {
+        if (knight.isAlive()) {
             return false;
         }
         knight.revive(AngelConstants.SPAWNER_KNIGHT_SET_HP);
@@ -22,7 +22,7 @@ public final class Spawner extends Angel {
 
     @Override
     public boolean affect(final Pyromancer pyromancer) {
-        if(pyromancer.isAlive()) {
+        if (pyromancer.isAlive()) {
             return false;
         }
         pyromancer.revive(AngelConstants.SPAWNER_PYROMANCER_SET_HP);
@@ -31,7 +31,7 @@ public final class Spawner extends Angel {
 
     @Override
     public boolean affect(final Rogue rogue) {
-        if(rogue.isAlive()) {
+        if (rogue.isAlive()) {
             return false;
         }
         rogue.revive(AngelConstants.SPAWNER_ROGUE_SET_HP);
@@ -40,7 +40,7 @@ public final class Spawner extends Angel {
 
     @Override
     public boolean affect(final Wizard wizard) {
-        if(wizard.isAlive()) {
+        if (wizard.isAlive()) {
             return false;
         }
         wizard.revive(AngelConstants.SPAWNER_WIZARD_SET_HP);

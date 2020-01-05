@@ -10,19 +10,21 @@ public abstract class Angel {
     private int x;
     private int y;
 
-    public Angel(AngelType type, int x, int y) {
+    public Angel(final AngelType type, final int x, final int y) {
         this.type = type;
         this.x = x;
         this.y = y;
     }
 
-    public AngelType getType() { return type; }
+    public final AngelType getType() {
+        return type;
+    }
 
-    public int getX() {
+    public final int getX() {
         return x;
     }
 
-    public int getY() {
+    public final int getY() {
         return y;
     }
 

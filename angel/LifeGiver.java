@@ -7,13 +7,13 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class LifeGiver extends Angel {
-    public LifeGiver(int x, int y) {
+    public LifeGiver(final int x, final int y) {
         super(AngelType.Good, x, y);
     }
 
     @Override
     public boolean affect(final Knight knight) {
-        if(!knight.isAlive()) {
+        if (!knight.isAlive()) {
             return false;
         }
         knight.addHp(AngelConstants.LIFE_GIVER_KNIGHT_BONUS_HP);
@@ -22,7 +22,7 @@ public final class LifeGiver extends Angel {
 
     @Override
     public boolean affect(final Pyromancer pyromancer) {
-        if(!pyromancer.isAlive()) {
+        if (!pyromancer.isAlive()) {
             return false;
         }
         pyromancer.addHp(AngelConstants.LIFE_GIVER_PYROMANCER_BONUS_HP);
@@ -31,7 +31,7 @@ public final class LifeGiver extends Angel {
 
     @Override
     public boolean affect(final Rogue rogue) {
-        if(!rogue.isAlive()) {
+        if (!rogue.isAlive()) {
             return false;
         }
         rogue.addHp(AngelConstants.LIFE_GIVER_ROGUE_BONUS_HP);
@@ -40,7 +40,7 @@ public final class LifeGiver extends Angel {
 
     @Override
     public boolean affect(final Wizard wizard) {
-        if(!wizard.isAlive()) {
+        if (!wizard.isAlive()) {
             return false;
         }
         wizard.addHp(AngelConstants.LIFE_GIVER_WIZARD_BONUS_HP);

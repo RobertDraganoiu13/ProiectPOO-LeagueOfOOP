@@ -7,13 +7,13 @@ import hero.Rogue;
 import hero.Wizard;
 
 public final class Dracula extends Angel {
-    public Dracula(int x, int y) {
+    public Dracula(final int x, final int y) {
         super(AngelType.Bad, x, y);
     }
 
     @Override
     public boolean affect(final Knight knight) {
-        if(!knight.isAlive()) {
+        if (!knight.isAlive()) {
             return false;
         }
         knight.addToAdditionalDamageModifiers(AngelConstants.DRACULA_KNIGHT_MODIFIER);
@@ -23,7 +23,7 @@ public final class Dracula extends Angel {
 
     @Override
     public boolean affect(final Pyromancer pyromancer) {
-        if(!pyromancer.isAlive()) {
+        if (!pyromancer.isAlive()) {
             return false;
         }
         pyromancer.addToAdditionalDamageModifiers(AngelConstants.DRACULA_PYROMANCER_MODIFIER);
@@ -33,7 +33,7 @@ public final class Dracula extends Angel {
 
     @Override
     public boolean affect(final Rogue rogue) {
-        if(!rogue.isAlive()) {
+        if (!rogue.isAlive()) {
             return false;
         }
         rogue.addToAdditionalDamageModifiers(AngelConstants.DRACULA_ROGUE_MODIFIER);
@@ -43,7 +43,7 @@ public final class Dracula extends Angel {
 
     @Override
     public boolean affect(final Wizard wizard) {
-        if(!wizard.isAlive()) {
+        if (!wizard.isAlive()) {
             return false;
         }
         wizard.addToAdditionalDamageModifiers(AngelConstants.DRACULA_WIZARD_MODIFIER);
