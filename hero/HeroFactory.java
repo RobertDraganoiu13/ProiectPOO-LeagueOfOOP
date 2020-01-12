@@ -25,7 +25,7 @@ public final class HeroFactory {
      * @param data
      * @return
      */
-    private Hero createHero(final HeroInputData data, int id) {
+    private Hero createHero(final HeroInputData data, final int id) {
         switch (data.getType()) {
             case 'K':
                 return new Knight(id, data.getX(), data.getY());

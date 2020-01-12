@@ -27,7 +27,8 @@ public final class GameInput {
      */
     public GameInput(final int height, final int width, final char[][] terrain,
                      final ArrayList<HeroInputData> heroesData, final int rounds,
-                     final ArrayList<String> movements, final ArrayList<ArrayList<AngelInputData>> angelDataArray) {
+                     final ArrayList<String> movements,
+                     final ArrayList<ArrayList<AngelInputData>> angelDataArray) {
         GameMap.provideData(height, width, terrain);
         this.gameMap = GameMap.getInstance();
         HeroFactory heroFactory = HeroFactory.getInstance();
@@ -54,5 +55,7 @@ public final class GameInput {
         return movements;
     }
 
-    public ArrayList<ArrayList<Angel>> getAngels() { return angels; }
+    public ArrayList<ArrayList<Angel>> getAngels() {
+        return angels;
+    }
 }

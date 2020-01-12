@@ -10,6 +10,8 @@ import hero.Wizard;
 import map.GameMap;
 import map.TerrainType;
 import fileio.implementations.FileWriter;
+import observer.GreatMagician;
+import observer.Observer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,10 +23,11 @@ public class Game {
     private ArrayList<String> movements;
     private GameMap gameMap;
     private FileWriter fileWriter;
-    private GreatMagician greatMagician;
+    private Observer greatMagician;
 
     public Game(final int rounds, final ArrayList<Hero> heroes, final ArrayList<String> movements,
-                final GameMap gameMap, final ArrayList<ArrayList<Angel>> angels, final String outputPath) throws IOException {
+                final GameMap gameMap, final ArrayList<ArrayList<Angel>> angels,
+                final String outputPath) throws IOException {
         this.rounds = rounds;
         this.heroes = heroes;
         this.angels = angels;
@@ -61,9 +64,9 @@ public class Game {
         printHeroStats();
     }
 
-    private final void applyAllOverTimeEffects() {
+    private void applyAllOverTimeEffects() {
         for (var hero : heroes) {
-            if(!hero.isAlive()) {
+            if (!hero.isAlive()) {
                 continue;
             }
             hero.applyOverTimeEffects();
@@ -72,7 +75,7 @@ public class Game {
 
     private void applyStrategies() {
         for (var hero : heroes) {
-            if(!hero.isAlive()) {
+            if (!hero.isAlive()) {
                 continue;
             }
             hero.applyStrategy();
@@ -102,7 +105,7 @@ public class Game {
     }
 
     private void checkOverTimeEffects() {
-        for(var hero : heroes) {
+        for (var hero : heroes) {
             hero.checkOverTimeEffects();
         }
     }
@@ -169,29 +172,24 @@ public class Game {
                         && heroes.get(i).isAlive() && heroes.get(j).isAlive()
                         && !battled.get(i) && !battled.get(j)) {
                     battled.set(i, true);
-                    battled.set(i, true);
-
-                    System.out.println(heroes.get(i).getClass().getSimpleName() + " " + heroes.get(i).getHp());
-                    System.out.println(heroes.get(j).getClass().getSimpleName() + " " + heroes.get(j).getHp());
+                    battled.set(j, true);
                     battle(heroes.get(i), heroes.get(j));
-                    System.out.println(heroes.get(i).getClass().getSimpleName() + " " + heroes.get(i).getHp());
-                    System.out.println(heroes.get(j).getClass().getSimpleName() + " " + heroes.get(j).getHp());
                 }
             }
         }
     }
 
-    private void applyAngelEffects(ArrayList<Angel> angels) {
-        for(var angel : angels) {
+    private void applyAngelEffects(final ArrayList<Angel> angels1) {
+        for (var angel : angels1) {
             greatMagician.notifyAngelSpawn(angel);
-            for(var hero : heroes) {
+            for (var hero : heroes) {
                 boolean oldStatus = hero.isAlive();
-                if(hero.hasSameCoordsAs(angel)) {
+                if (hero.hasSameCoordsAs(angel)) {
                     boolean accepted = hero.acceptAngel(angel);
 
                     // notify gm if angel had effect on hero based on angel type
-                    if(accepted) {
-                        if(angel.getType() == AngelType.Good) {
+                    if (accepted) {
+                        if (angel.getType() == AngelType.Good) {
                             greatMagician.notifyAngelHelp(angel, hero);
                         } else {
                             greatMagician.notifyAngelHit(angel, hero);
@@ -200,8 +198,8 @@ public class Game {
 
                     // notify gm if angel killed or revived hero
                     boolean newStatus = hero.isAlive();
-                    if(oldStatus != newStatus) {
-                        if(newStatus == false) {
+                    if (oldStatus != newStatus) {
+                        if (!newStatus) {
                             greatMagician.notifyKill(hero);
                         } else {
                             greatMagician.notifyRevive(hero);

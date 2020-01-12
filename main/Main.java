@@ -14,7 +14,8 @@ public final class  Main {
 
         // start game
         Game game = new Game(input.getNumOfRounds(), input.getHeroes(),
-                                input.getMovements(), input.getGameMap(), input.getAngels(), args[1]);
+                                input.getMovements(), input.getGameMap(),
+                                    input.getAngels(), args[1]);
         game.start();
     }
 }

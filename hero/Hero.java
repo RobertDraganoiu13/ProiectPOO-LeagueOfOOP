@@ -1,7 +1,7 @@
 package hero;
 
 import angel.Angel;
-import main.GreatMagician;
+import observer.GreatMagician;
 import map.TerrainType;
 import common.Constants;
 
@@ -46,7 +46,7 @@ public abstract class Hero {
         this.additionalDamageModifier = 0;
     }
 
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
@@ -99,7 +99,7 @@ public abstract class Hero {
         roundsLeftOfOverTimeEffect--;
     }
 
-    public void checkOverTimeEffects() {
+    public final void checkOverTimeEffects() {
         // remove over time effect if rounds passed
         if (overTimeEffect != OverTimeEffects.None && roundsLeftOfOverTimeEffect == 0) {
             overTimeEffect = OverTimeEffects.None;
@@ -141,16 +141,16 @@ public abstract class Hero {
         return hp;
     }
 
-    public final void addHp(int bonus) {
+    public final void addHp(final int bonus) {
         hp += bonus;
-        if(hp > maxHp) {
+        if (hp > maxHp) {
             hp = maxHp;
         }
     }
 
-    public final void revive(int hp) {
+    public final void revive(final int hp1) {
         this.isAlive = true;
-        this.hp = hp;
+        this.hp = hp1;
     }
 
     public final int getMaxHp() {
@@ -224,8 +224,8 @@ public abstract class Hero {
         }
     }
 
-    public final void addXpOutsideBattle(final int xp) {
-        this.xp += xp;
+    public final void addXpOutsideBattle(final int xp1) {
+        this.xp += xp1;
 
         // update level based on total xp
         while (this.xp >= Constants.LEVEL_UP_CONSTANT1
@@ -272,7 +272,7 @@ public abstract class Hero {
         this.overTimeDamage = damage;
     }
 
-    public void addToAdditionalDamageModifiers(float angelDamageModifiers) {
+    public final void addToAdditionalDamageModifiers(final float angelDamageModifiers) {
         this.additionalDamageModifier += angelDamageModifiers;
     }
 

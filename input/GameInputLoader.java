@@ -52,11 +52,12 @@ public final class GameInputLoader {
         }
 
         // add angel types to angel types array
-        ArrayList<ArrayList<AngelInputData>> angelDataArray = new ArrayList<ArrayList<AngelInputData>>();
+        ArrayList<ArrayList<AngelInputData>> angelDataArray
+                = new ArrayList<ArrayList<AngelInputData>>();
         for (int i = 0; i < rounds; ++i) {
             angelDataArray.add(new ArrayList<AngelInputData>());
             int count = fileSystem.nextInt();
-            for(int j = 0; j < count; ++j) {
+            for (int j = 0; j < count; ++j) {
                 String data = fileSystem.nextWord();
                 angelDataArray.get(i).add(new AngelInputData(data));
             }

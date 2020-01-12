@@ -1,4 +1,4 @@
-package main;
+package observer;
 
 import angel.Angel;
 import fileio.implementations.FileWriter;
@@ -6,7 +6,7 @@ import hero.Hero;
 
 import java.io.IOException;
 
-public final class GreatMagician {
+public final class GreatMagician implements Observer {
     private static GreatMagician instance = null;
     private static FileWriter fileWriter;
     private static String info;
@@ -72,7 +72,7 @@ public final class GreatMagician {
                 + " reached level " + hero.getLevel());
     }
 
-    private void addToLog(final String message) {
+    public void addToLog(final String message) {
         info += message + "\n";
     }
 

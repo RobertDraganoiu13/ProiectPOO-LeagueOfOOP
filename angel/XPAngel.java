@@ -5,7 +5,7 @@ import hero.Knight;
 import hero.Pyromancer;
 import hero.Rogue;
 import hero.Wizard;
-import main.GreatMagician;
+import observer.GreatMagician;
 
 public final class XPAngel extends Angel {
     public XPAngel(final int x, final int y) {

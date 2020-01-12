@@ -38,7 +38,8 @@ public final class Rogue extends Hero {
 
         // calculate and deal total damage
         int totalDamage = Math.round(abilityDamage * (terrainDamageModifier * critDamageModifier));
-        enemyHero.takeDamage(totalDamage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
+        enemyHero.takeDamage(totalDamage,
+                enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -56,16 +57,16 @@ public final class Rogue extends Hero {
         }
 
         // apply modifiers
-        System.out.println("unrounded ability2 rogue dmg no race: " + abilityDamage * terrainDamageModifier);
-        System.out.println("unrounded ability2 rogue dmg: " + abilityDamage * terrainDamageModifier * (enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier));
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-        int overTimeDamage = Math.round(damage * enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
+        int overTimeDamage = Math.round(damage
+                * (enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier));
 
         // apply over time effect and deal damage
         enemyHero.addOverTimeEffect(OverTimeEffects.Incapacitated,
                 RogueConstants.ROGUE_ABILITY2_ROUNDS_INCAPACITATED
                         * roundsIncapacitatedModifier, overTimeDamage);
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
+        enemyHero.takeDamage(damage,
+                enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -124,16 +125,20 @@ public final class Rogue extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        if(overTimeEffect == OverTimeEffects.Incapacitated) {
+        if (overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
-        if(hp < maxHp / RogueConstants.ROGUE_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(RogueConstants.ROGUE_STRATEGY2_DAMAGE_MODIFIER, RogueConstants.ROGUE_STRATEGY2_DIVISOR_FOR_WON_HP));
-        } else if(hp < maxHp / RogueConstants.ROGUE_BIG_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new MidHealthStrategy(RogueConstants.ROGUE_STRATEGY1_DAMAGE_MODIFIER, RogueConstants.ROGUE_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        if (hp < maxHp / RogueConstants.ROGUE_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new LowHealthStrategy(RogueConstants.ROGUE_STRATEGY2_DAMAGE_MODIFIER,
+                            RogueConstants.ROGUE_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if (hp < maxHp / RogueConstants.ROGUE_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new MidHealthStrategy(RogueConstants.ROGUE_STRATEGY1_DAMAGE_MODIFIER,
+                            RogueConstants.ROGUE_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
@@ -141,7 +146,7 @@ public final class Rogue extends Hero {
     }
 
     @Override
-    public boolean acceptAngel(Angel angel) {
+    public boolean acceptAngel(final Angel angel) {
         return angel.affect(this);
     }
 }

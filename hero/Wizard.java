@@ -28,7 +28,8 @@ public final class Wizard extends Hero {
 
         // apply modifiers on percentage
         float totalPercent = abilityDamagePercentage * terrainDamageModifier;
-        int damage = Math.round((enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier)
+        int damage = Math.round((enemyHero.provideFirstAbilityRaceModifier(this)
+                                    + additionalDamageModifier)
                 * totalPercent * Math.min(WizardConstants.WIZARD_ABILITY1_MIN_DAMAGE_PERCENTAGE
                 * enemyHero.getMaxHp(), enemyHero.getHp()));
 
@@ -61,7 +62,7 @@ public final class Wizard extends Hero {
 
         // use additional modifier only if not against wizard
         float bonusModifier = 0.0f;
-        if(enemyHero.provideFirstAbilityRaceModifier(this) != 0.0f) {
+        if (enemyHero.provideFirstAbilityRaceModifier(this) != 0.0f) {
             bonusModifier = additionalDamageModifier;
         }
 
@@ -128,16 +129,20 @@ public final class Wizard extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        if(overTimeEffect == OverTimeEffects.Incapacitated) {
+        if (overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
-        if(hp < maxHp / WizardConstants.WIZARD_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY2_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY2_DIVISOR_FOR_WON_HP));
-        } else if(hp < maxHp / WizardConstants.WIZARD_BIG_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new MidHealthStrategy(WizardConstants.WIZARD_STRATEGY1_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        if (hp < maxHp / WizardConstants.WIZARD_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY2_DAMAGE_MODIFIER,
+                            WizardConstants.WIZARD_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if (hp < maxHp / WizardConstants.WIZARD_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new MidHealthStrategy(WizardConstants.WIZARD_STRATEGY1_DAMAGE_MODIFIER,
+                            WizardConstants.WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
@@ -145,7 +150,7 @@ public final class Wizard extends Hero {
     }
 
     @Override
-    public boolean acceptAngel(Angel angel) {
+    public boolean acceptAngel(final Angel angel) {
         return angel.affect(this);
     }
 }

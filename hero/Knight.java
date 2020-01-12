@@ -40,8 +40,6 @@ public final class Knight extends Hero {
         // calculate damage with terrain modifier
         int damage = Math.round(abilityDamage * terrainDamageModifier);
 
-        System.out.println("knight damage1: " +damage);
-
         // calculate additional damage modifier
         float bonusModifier = 0f;
         if (enemyHero.provideFirstAbilityRaceModifier(this) != 1.0f) {
@@ -49,12 +47,14 @@ public final class Knight extends Hero {
         }
 
         // execute if damage is not enough to kill and execute conditions are met
-        if (damage * (enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier) < enemyHero.getHp() && isExecuted) {
+        if (damage * (enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier)
+                < enemyHero.getHp() && isExecuted) {
             enemyHero.takeDamage(enemyHero.getHp(), 0);
         }
 
         // deal damage
-        enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier);
+        enemyHero.takeDamage(damage,
+                enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier);
     }
 
     @Override
@@ -75,10 +75,8 @@ public final class Knight extends Hero {
 
         // calculate and deal damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
-
-        System.out.println("knight damage2: " +damage);
-
-        enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
+        enemyHero.takeDamage(damage,
+                enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
     @Override
@@ -137,27 +135,29 @@ public final class Knight extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        System.out.println(overTimeEffect);
-        if(overTimeEffect == OverTimeEffects.Incapacitated) {
+        if (overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
-        if(hp < maxHp / KnightConstants.KNIGHT_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY2_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY2_DIVISOR_FOR_WON_HP));
-        } else if(hp < maxHp / KnightConstants.KNIGHT_BIG_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new MidHealthStrategy(KnightConstants.KNIGHT_STRATEGY1_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP));
+        if (hp < maxHp / KnightConstants.KNIGHT_SMALL_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY2_DAMAGE_MODIFIER,
+                            KnightConstants.KNIGHT_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if (hp < maxHp / KnightConstants.KNIGHT_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(
+                    new MidHealthStrategy(KnightConstants.KNIGHT_STRATEGY1_DAMAGE_MODIFIER,
+                            KnightConstants.KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
 
-        System.out.println(strategyManager);
         strategyManager.applyStrategy(this);
     }
 
     @Override
-    public boolean acceptAngel(Angel angel) {
+    public boolean acceptAngel(final Angel angel) {
         return angel.affect(this);
     }
 }
