@@ -5,6 +5,7 @@ import map.TerrainType;
 import common.KnightConstants;
 import strategy.HighHealthStrategy;
 import strategy.LowHealthStrategy;
+import strategy.MidHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Knight extends Hero {
@@ -15,15 +16,15 @@ public final class Knight extends Hero {
 
     @Override
     public void useFirstAbility(final Hero enemyHero, final TerrainType terrain) {
-        // return player hp if execute conditions are met
+        // verify execute conditions
+        boolean isExecuted = false;
         float executeHealthPercentage =
                 Math.min(KnightConstants.KNIGHT_ABILITY1_EXECUTE_MAX_PERCENTAGE,
                         KnightConstants.KNIGHT_ABILITY1_EXECUTE_PERCENTAGE
                                 + this.getLevel()
                                     * KnightConstants.KNIGHT_ABILITY1_EXECUTE_PERCENTAGE_BONUS);
         if (enemyHero.getHp() < enemyHero.getMaxHp() * executeHealthPercentage) {
-            enemyHero.takeDamage(enemyHero.getHp(), 0);
-            return;
+            isExecuted = true;
         }
 
         // base damage + level adds
@@ -39,10 +40,17 @@ public final class Knight extends Hero {
         // calculate damage with terrain modifier
         int damage = Math.round(abilityDamage * terrainDamageModifier);
 
+        System.out.println("knight damage1: " +damage);
+
         // calculate additional damage modifier
         float bonusModifier = 0f;
-        if(enemyHero.provideFirstAbilityRaceModifier(this) != 1.0f) {
+        if (enemyHero.provideFirstAbilityRaceModifier(this) != 1.0f) {
             bonusModifier = additionalDamageModifier;
+        }
+
+        // execute if damage is not enough to kill and execute conditions are met
+        if (damage * (enemyHero.provideFirstAbilityRaceModifier(this) + bonusModifier) < enemyHero.getHp() && isExecuted) {
+            enemyHero.takeDamage(enemyHero.getHp(), 0);
         }
 
         // deal damage
@@ -67,6 +75,9 @@ public final class Knight extends Hero {
 
         // calculate and deal damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
+
+        System.out.println("knight damage2: " +damage);
+
         enemyHero.takeDamage(damage, enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
@@ -126,19 +137,22 @@ public final class Knight extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        if(overTimeEffect != OverTimeEffects.None) {
+        System.out.println(overTimeEffect);
+        if(overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
         if(hp < maxHp / KnightConstants.KNIGHT_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY1_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP));
-        } else if(hp < maxHp / KnightConstants.KNIGHT_BIG_LIFE_DIVISOR) {
             strategyManager = new StrategyManager(new LowHealthStrategy(KnightConstants.KNIGHT_STRATEGY2_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if(hp < maxHp / KnightConstants.KNIGHT_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new MidHealthStrategy(KnightConstants.KNIGHT_STRATEGY1_DAMAGE_MODIFIER, KnightConstants.KNIGHT_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
+
+        System.out.println(strategyManager);
         strategyManager.applyStrategy(this);
     }
 

@@ -5,6 +5,7 @@ import map.TerrainType;
 import common.PyromancerConstants;
 import strategy.HighHealthStrategy;
 import strategy.LowHealthStrategy;
+import strategy.MidHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Pyromancer extends Hero {
@@ -28,6 +29,9 @@ public final class Pyromancer extends Hero {
 
         // calculate and deal damage
         int damage = Math.round(abilityDamage * terrainDamageModifier);
+
+        System.out.println("pyro damage1: " +damage);
+
         enemyHero.takeDamage(damage, enemyHero.provideFirstAbilityRaceModifier(this) + additionalDamageModifier);
     }
 
@@ -52,6 +56,7 @@ public final class Pyromancer extends Hero {
         int overTimeDamage = Math.round(Math.round(abilityOverTimeDamage * terrainDamageModifier)
                                 * enemyHero.provideSecondAbilityRaceModifier(this) + additionalDamageModifier);
 
+        System.out.println("pyro damage2: " + damage + " " + overTimeDamage);
         // apply over time effect and deal damage
         enemyHero.addOverTimeEffect(OverTimeEffects.Damaged,
                 PyromancerConstants.PYROMANCER_ABILITY2_ROUNDS_IGNITED, overTimeDamage);
@@ -114,16 +119,16 @@ public final class Pyromancer extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        if(overTimeEffect != OverTimeEffects.None) {
+        if(overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
         if(hp < maxHp / PyromancerConstants.PYROMANCER_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(PyromancerConstants.PYROMANCER_STRATEGY1_DAMAGE_MODIFIER, PyromancerConstants.PYROMANCER_STRATEGY1_DIVISOR_FOR_LOST_HP));
-        } else if(hp < maxHp / PyromancerConstants.PYROMANCER_BIG_LIFE_DIVISOR) {
             strategyManager = new StrategyManager(new LowHealthStrategy(PyromancerConstants.PYROMANCER_STRATEGY2_DAMAGE_MODIFIER, PyromancerConstants.PYROMANCER_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if(hp < maxHp / PyromancerConstants.PYROMANCER_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new MidHealthStrategy(PyromancerConstants.PYROMANCER_STRATEGY1_DAMAGE_MODIFIER, PyromancerConstants.PYROMANCER_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }

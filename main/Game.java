@@ -135,20 +135,19 @@ public class Game {
         int levelCombatant1 = combatant1.getLevel();
         int levelCombatant2 = combatant2.getLevel();
 
-        // no xp if both dead
-        if(!combatant1.isAlive() && !combatant2.isAlive()) {
-            greatMagician.notifyKill(combatant1, combatant2);
-            greatMagician.notifyKill(combatant2, combatant1);
-            return;
-        }
-
+        // notify kills to great magician
         if (!combatant2.isAlive()) {
             greatMagician.notifyKill(combatant1, combatant2);
-            combatant1.addXp(levelCombatant2);
         }
-
         if (!combatant1.isAlive()) {
             greatMagician.notifyKill(combatant2, combatant1);
+        }
+
+        // add xp to players
+        if (!combatant2.isAlive()) {
+            combatant1.addXp(levelCombatant2);
+        }
+        if (!combatant1.isAlive()) {
             combatant2.addXp(levelCombatant1);
         }
     }
@@ -171,7 +170,12 @@ public class Game {
                         && !battled.get(i) && !battled.get(j)) {
                     battled.set(i, true);
                     battled.set(i, true);
+
+                    System.out.println(heroes.get(i).getClass().getSimpleName() + " " + heroes.get(i).getHp());
+                    System.out.println(heroes.get(j).getClass().getSimpleName() + " " + heroes.get(j).getHp());
                     battle(heroes.get(i), heroes.get(j));
+                    System.out.println(heroes.get(i).getClass().getSimpleName() + " " + heroes.get(i).getHp());
+                    System.out.println(heroes.get(j).getClass().getSimpleName() + " " + heroes.get(j).getHp());
                 }
             }
         }

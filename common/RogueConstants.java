@@ -18,9 +18,9 @@ public final class RogueConstants {
     public static final int   ROGUE_ABILITY2_BASE_DAMAGE = 40;
     public static final int   ROGUE_ABILITY2_LEVEL_BONUS_MODIFIER = 10;
     public static final int   ROGUE_ABILITY2_ROUNDS_INCAPACITATED = 3;
-    public static final float ROGUE_ABILITY2_KNIGHT_MODIFIER = 0.8f;
+    public static final float ROGUE_ABILITY2_KNIGHT_MODIFIER = 0.7999f;
     public static final float ROGUE_ABILITY2_PYROMANCER_MODIFIER = 1.2f;
-    public static final float ROGUE_ABILITY2_ROGUE_MODIFIER = 0.9f;
+    public static final float ROGUE_ABILITY2_ROGUE_MODIFIER = 0.8999f;
     public static final float ROGUE_ABILITY2_WIZARD_MODIFIER = 1.25f;
 
     public static final int ROGUE_SMALL_LIFE_DIVISOR = 7;

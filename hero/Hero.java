@@ -141,7 +141,12 @@ public abstract class Hero {
         return hp;
     }
 
-    public final void addHp(int bonus) { hp += bonus; }
+    public final void addHp(int bonus) {
+        hp += bonus;
+        if(hp > maxHp) {
+            hp = maxHp;
+        }
+    }
 
     public final void revive(int hp) {
         this.isAlive = true;
@@ -221,6 +226,19 @@ public abstract class Hero {
 
     public final void addXpOutsideBattle(final int xp) {
         this.xp += xp;
+
+        // update level based on total xp
+        while (this.xp >= Constants.LEVEL_UP_CONSTANT1
+                + this.level * Constants.LEVEL_UP_CONSTANT2) {
+            this.level++;
+
+            // notify great magician
+            var greatMagician = GreatMagician.getInstance();
+            greatMagician.notifyLevelUp(this);
+
+            this.maxHp += this.bonusHpPerLevel;
+            this.hp = this.maxHp;
+        }
     }
 
     public final void levelUp() {
@@ -230,7 +248,7 @@ public abstract class Hero {
         var greatMagician = GreatMagician.getInstance();
         greatMagician.notifyLevelUp(this);
 
-        this.xp = Constants.LEVEL_UP_CONSTANT1 + this.level * Constants.LEVEL_UP_CONSTANT2;
+        this.xp = Constants.LEVEL_UP_CONSTANT1 + (this.level - 1) * Constants.LEVEL_UP_CONSTANT2;
         this.maxHp += this.bonusHpPerLevel;
         this.hp = this.maxHp;
     }

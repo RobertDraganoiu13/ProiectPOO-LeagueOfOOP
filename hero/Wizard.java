@@ -5,6 +5,7 @@ import map.TerrainType;
 import common.WizardConstants;
 import strategy.HighHealthStrategy;
 import strategy.LowHealthStrategy;
+import strategy.MidHealthStrategy;
 import strategy.StrategyManager;
 
 public final class Wizard extends Hero {
@@ -127,16 +128,16 @@ public final class Wizard extends Hero {
     @Override
     public void applyStrategy() {
         // only apply to non incapacitated targets
-        if(overTimeEffect != OverTimeEffects.None) {
+        if(overTimeEffect == OverTimeEffects.Incapacitated) {
             return;
         }
 
         // select and apply strategy
         StrategyManager strategyManager;
         if(hp < maxHp / WizardConstants.WIZARD_SMALL_LIFE_DIVISOR) {
-            strategyManager = new StrategyManager(new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY1_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP));
-        } else if(hp < maxHp / WizardConstants.WIZARD_BIG_LIFE_DIVISOR) {
             strategyManager = new StrategyManager(new LowHealthStrategy(WizardConstants.WIZARD_STRATEGY2_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY2_DIVISOR_FOR_WON_HP));
+        } else if(hp < maxHp / WizardConstants.WIZARD_BIG_LIFE_DIVISOR) {
+            strategyManager = new StrategyManager(new MidHealthStrategy(WizardConstants.WIZARD_STRATEGY1_DAMAGE_MODIFIER, WizardConstants.WIZARD_STRATEGY1_DIVISOR_FOR_LOST_HP));
         } else {
             strategyManager = new StrategyManager(new HighHealthStrategy());
         }
